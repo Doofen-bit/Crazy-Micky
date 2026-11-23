@@ -1,13 +1,154 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stress, across time · RNA-seq Explorer</title><meta name="description" content="Explore mouse stress-associated gene expression across brain regions, sampling times and phenotypes. A reproducible D3 information visualization project."><link rel="stylesheet" href="styles.css"><script defer src="vendor/d3.v7.min.js"></script><script defer src="app.js"></script></head>
-<body><a class="skip" href="#workspace">Skip to explorer</a><header><a class="brand" href="./"><span class="brandmark" aria-hidden="true">∿</span> STRESS ATLAS <small>RNA-seq explorer</small></a><nav><a href="#workspace">Explore</a><a href="methods.html">Data & methods</a><a href="https://github.com/Doofen-bit/Crazy-Micky">Source code</a></nav></header>
-<main><section class="intro"><div><p class="eyebrow">MOLECULAR NEUROSCIENCE / INFORMATION VISUALIZATION</p><h1>Stress, across time.</h1><p class="lead">A molecular response depends on <em>where</em> and <em>when</em> you look.<br>Explore gene expression in two mouse brain regions after chronic social stress.</p></div><div class="study"><div><strong>2</strong><span>brain regions</span></div><div><strong>4</strong><span>sampling times</span></div><div><strong>93</strong><span>tissue samples</span></div><p>47 animals · 3 phenotypes · 24 comparisons</p></div></section>
-<section class="guide" aria-label="How to explore"><strong>Follow a question</strong><button data-tour="context">Where are differences concentrated?</button><button data-tour="gene">How variable is one gene?</button><button data-tour="process">Which processes connect genes?</button></section>
-<section id="workspace" aria-label="RNA-seq explorer"><div class="controls"><label>Compare phenotypes<select id="contrast"><option value="resilient_vs_control">Resilient vs control</option><option value="susceptible_vs_control">Susceptible vs control</option><option value="resilient_vs_susceptible">Resilient vs susceptible</option></select></label><label>Adjusted p-value &lt;<select id="alpha"><option>.01</option><option selected>.05</option><option>.1</option></select></label><label>|log₂ fold change| &gt;<select id="lfc"><option>0</option><option selected>0.5</option><option>1</option><option>2</option></select></label><div class="search"><label for="gene-search">Find a gene</label><div class="searchrow"><input id="gene-search" placeholder="Symbol or Ensembl ID" autocomplete="off" aria-controls="suggestions"><button id="search-go">Find</button></div><div id="suggestions" hidden></div></div><button id="reset" class="secondary">Reset all</button></div>
-<div class="contextbar"><p id="context-title">Loading analysis…</p><span class="tag">REANALYSIS · v1.0.0</span></div><p id="status" role="status" aria-live="polite">Loading prepared data.</p>
-<div class="grid"><section class="panel overview-panel"><div class="panelhead"><div><p class="eyebrow">COMPARE CONTEXTS</p><h2>Where do genes differ?</h2></div><span class="step">Select a cell</span></div><p class="description">Genes passing both selected cutoffs. Each cell is a separate comparison.</p><div id="overview" aria-label="Region by sampling time overview"></div><div id="overview-legend"></div><p class="note">ZT = hours after lights-on. Day: ZT4, ZT10; night: ZT16, ZT22. Hb includes habenular tissue; SCN is the suprachiasmatic nucleus.</p></section>
-<section class="panel volcano-panel"><div class="panelhead"><div><p class="eyebrow">INSPECT THE EVIDENCE</p><h2>Effect meets significance</h2></div><button id="download" class="textbutton">Export comparison CSV</button></div><p id="volcano-sub" class="description"></p><div class="volcano-wrap"><canvas id="volcano-canvas" aria-label="Volcano plot; select a gene with the search or candidate buttons" role="img"></canvas><svg id="volcano-axis" aria-hidden="true"></svg></div><div class="legend"><span><i class="swatch down"></i>Lower in first group</span><span><i class="swatch up"></i>Higher in first group</span><span><i class="swatch muted"></i>Below cutoffs</span><span>◎ Selected gene</span></div><p id="volcano-note" class="note"></p><div id="candidates" class="candidate-list" aria-label="Candidate genes"></div></section>
-<section class="panel expression-panel"><div class="panelhead"><div><p class="eyebrow">LOOK BEYOND THE AVERAGE</p><h2 id="expression-title">A gene, across the day</h2></div><button id="clear-gene" class="textbutton">Clear gene</button></div><p id="expression-sub" class="description">Select a gene in the volcano, network, or search to reveal individual samples.</p><div id="expression"></div><div class="legend phenotype"><span>● Control</span><span>▲ Resilient</span><span>■ Susceptible</span></div><p class="note">Dots are individual animals within each region/time; lines connect group means, not animals. Different time points sample different animals. Profiles are descriptive, not a test of rhythmicity.</p></section>
-<section class="panel network-panel"><div class="panelhead"><div><p class="eyebrow">EXPLORE FUNCTION</p><h2>Genes in shared processes</h2></div><button id="clear-term" class="textbutton">Clear process</button></div><p id="network-sub" class="description"></p><div id="network"></div><div id="term-buttons" class="term-list"></div><p id="network-note" class="note"></p><p class="note">○ Gene · ▭ GO Biological Process. Edges mean annotation membership, not causal regulation. Enrichment is precomputed at p-adj &lt; .05 and |log₂FC| &gt; .5.</p></section></div>
-<details class="data-notes"><summary>Read the evidence carefully</summary><div><p><strong>These are exploratory reanalysis results.</strong> DESeq2 fits three phenotypes separately within each region and sampling time. Positive log₂ fold change means higher expression in the first named group. Changing cutoffs reclassifies stored results; it does not refit models or rerun GO enrichment.</p><p><strong>Missing is not zero.</strong> Genes without adjusted p-values are omitted from the volcano's y-axis and remain searchable. Independent filtering was computed at α = .05. Low-count filtering can change the tested universe across contexts, so DEG counts also depend on power and gene availability.</p><p><strong>Scope.</strong> Male mice, small group sizes, bulk tissue, and a single experimental dataset limit generalization. Significance in one time point but not another does not establish a time-by-phenotype interaction. Cross-region samples from one animal are paired; no cross-region inference is made here.</p></div></details></section>
-<footer><p>Data: <a href="https://doi.gin.g-node.org/10.12751/g-node.jj57l9/">Narain et al. (2024), GIN · CC BY 4.0</a><br>Yixuan Du · Yi Yao · Jinyu Zheng / NYU Shanghai, Fall 2026</p><p><a href="methods.html">Methods, provenance & credits</a><br><a href="data/manifest.json">Analysis manifest</a> · <a href="data/samples.csv">Sample metadata</a></p></footer></main><div id="tooltip" role="tooltip" hidden></div></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stress, across time · RNA-seq Explorer</title>
+<meta name="description" content="Why do some stressed mice bounce back? Explore which genes change in two mouse brain regions, at four times of day, after chronic social stress. An interactive D3 information visualization.">
+<link rel="stylesheet" href="styles.css">
+<script defer src="vendor/d3.v7.min.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#workspace">Skip to explorer</a>
+<header>
+  <a class="brand" href="./"><span class="brandmark" aria-hidden="true">∿</span> STRESS ATLAS <small>an RNA-seq explorer for everyone</small></a>
+  <nav><a href="#experiment">The experiment</a><a href="#workspace">Explore</a><a href="#glossary">Glossary</a><a href="methods.html">Methods</a><a href="https://github.com/Doofen-bit/Crazy-Micky">Code</a></nav>
+</header>
+<main>
+
+<section class="intro">
+  <div>
+    <p class="eyebrow">AN INTERACTIVE GUIDE TO A MOUSE STRESS EXPERIMENT</p>
+    <h1>Stress, across time.</h1>
+    <p class="lead">After repeated social stress, some mice bounce back and others do not.<br>
+      Which <em>genes</em> behave differently in their brains, <em>where</em>, and at <em>what time of day</em>?</p>
+  </div>
+  <div class="study">
+    <div><strong>2</strong><span>brain regions</span></div>
+    <div><strong>4</strong><span>times of day</span></div>
+    <div><strong>3</strong><span>groups of mice</span></div>
+    <p>93 brain samples · 47 mice · ~46,000 genes measured · 24 group comparisons</p>
+  </div>
+</section>
+
+<section id="experiment" class="experiment" aria-labelledby="exp-title">
+  <div class="sectionhead">
+    <p class="eyebrow">NO BIOLOGY BACKGROUND NEEDED</p>
+    <h2 id="exp-title">The experiment in 30 seconds</h2>
+  </div>
+  <ol class="exp-steps">
+    <li>
+      <svg viewBox="0 0 80 56" aria-hidden="true"><ellipse cx="26" cy="36" rx="14" ry="9" fill="#9fb3c2"/><circle cx="14" cy="28" r="4" fill="#9fb3c2"/><ellipse cx="56" cy="32" rx="19" ry="12" fill="#c25532"/><circle cx="72" cy="22" r="5" fill="#c25532"/><path d="M38 14l4 6 4-6" stroke="#c25532" stroke-width="2.5" fill="none"/></svg>
+      <h3><span>1</span> Stress</h3>
+      <p>For 15 days, each test mouse met a larger, aggressive mouse every day (<span class="gloss" tabindex="0" data-gloss="csds">chronic social defeat</span>). A <strong>control</strong> group was never stressed.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 80 56" aria-hidden="true"><rect x="4" y="8" width="72" height="40" rx="4" fill="none" stroke="#9fb3c2" stroke-width="2"/><ellipse cx="22" cy="28" rx="9" ry="6" fill="#007f79"/><path d="M33 28h12" stroke="#007f79" stroke-width="2.5" marker-end="url(#a)"/><ellipse cx="60" cy="28" rx="9" ry="6" fill="#596b85"/><defs><marker id="a" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#007f79"/></marker></defs></svg>
+      <h3><span>2</span> Sort</h3>
+      <p>A social test sorted the stressed mice. <strong>Resilient</strong> mice still approached a new mouse. <strong>Susceptible</strong> mice avoided it, a depression-like behaviour.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 80 56" aria-hidden="true"><circle cx="18" cy="20" r="9" fill="#e7b93f"/><path d="M50 12a10 10 0 1 0 10 14 8 8 0 1 1-10-14z" fill="#103f59"/><path d="M6 44h68" stroke="#9fb3c2" stroke-width="2"/><g fill="#007f79"><circle cx="12" cy="44" r="3"/><circle cx="30" cy="44" r="3"/><circle cx="50" cy="44" r="3"/><circle cx="68" cy="44" r="3"/></g></svg>
+      <h3><span>3</span> Sample</h3>
+      <p>Brains were collected at <strong>four times of day</strong>, two in the lights-on rest phase and two in the lights-off active phase. Mice are night-active. Two regions were taken: the <span class="gloss" tabindex="0" data-gloss="scn">SCN</span>, the brain's master clock, and the <span class="gloss" tabindex="0" data-gloss="hb">habenula (Hb)</span>, which processes bad experiences.</p>
+    </li>
+    <li>
+      <svg viewBox="0 0 80 56" aria-hidden="true"><g fill="#356ab4"><rect x="8" y="30" width="9" height="18"/><rect x="21" y="16" width="9" height="32"/><rect x="34" y="38" width="9" height="10"/></g><g fill="#c25532"><rect x="50" y="22" width="9" height="26"/><rect x="63" y="10" width="9" height="38"/></g></svg>
+      <h3><span>4</span> Measure</h3>
+      <p><span class="gloss" tabindex="0" data-gloss="rnaseq">RNA-seq</span> counted the messages (RNA) each gene was sending. That tells us how <span class="gloss" tabindex="0" data-gloss="expression">active</span> each of ~46,000 genes was. We then compared the groups one gene at a time.</p>
+    </li>
+  </ol>
+  <div class="question">
+    <p><strong>Our question:</strong> which genes differ between resilient, susceptible and never-stressed mice, and does the answer depend on the <em>brain region</em> and the <em>time of day</em>?</p>
+    <p class="note">The original study (Narain et al., 2024) reported that most differences appeared at night (ZT16) and in resilient mice. This site lets you check that claim yourself in our own re-analysis of their public data.</p>
+  </div>
+</section>
+
+<section class="guide" aria-label="Guided story">
+  <strong>Follow the story</strong>
+  <button data-tour="context"><b>1</b> When and where do genes change?</button>
+  <button data-tour="gene"><b>2</b> Follow one gene through the day</button>
+  <button data-tour="process"><b>3</b> What do the changed genes do?</button>
+</section>
+<p id="story" class="story" aria-live="polite" hidden></p>
+
+<section id="workspace" aria-label="RNA-seq explorer">
+  <div class="controls">
+    <label>Which groups to compare
+      <select id="contrast">
+        <option value="resilient_vs_control">Resilient vs control (never stressed)</option>
+        <option value="susceptible_vs_control">Susceptible vs control (never stressed)</option>
+        <option value="resilient_vs_susceptible">Resilient vs susceptible</option>
+      </select>
+    </label>
+    <label><span>Confidence cutoff · <span class="gloss" tabindex="0" data-gloss="padj">adjusted p</span> &lt;</span>
+      <select id="alpha"><option value=".01">.01 (strict)</option><option value=".05" selected>.05 (standard)</option><option value=".1">.1 (lenient)</option></select>
+    </label>
+    <label><span>Minimum change · <span class="gloss" tabindex="0" data-gloss="lfc">|log₂ fold change|</span> &gt;</span>
+      <select id="lfc"><option value="0">0 (any change)</option><option value="0.5" selected>0.5 (≈1.4× up or down)</option><option value="1">1 (2×)</option><option value="2">2 (4×)</option></select>
+    </label>
+    <div class="search"><label for="gene-search">Find a gene</label><div class="searchrow"><input id="gene-search" placeholder="Gene name, e.g. Kcnk2" autocomplete="off" aria-controls="suggestions"><button id="search-go">Find</button></div><div id="suggestions" hidden></div></div>
+    <button id="reset" class="secondary">Reset all</button>
+  </div>
+
+  <div class="contextbar"><p id="context-title">Loading analysis…</p><span class="tag" title="Our own re-analysis of the public data, version 1.0.0">OUR REANALYSIS · v1.0.0</span></div>
+  <p id="status" role="status" aria-live="polite">Loading prepared data.</p>
+
+  <div class="grid">
+    <section class="panel overview-panel">
+      <div class="panelhead"><div><p class="eyebrow">VIEW 1 · COMPARE PLACES AND TIMES</p><h2>When and where do genes change?</h2></div><span class="step">Click a box</span></div>
+      <p class="description">Each box is one comparison: one brain region at one time of day. The number counts the genes that clearly differ between the two groups. Darker means more genes changed. Click a box to look inside it.</p>
+      <div id="overview" aria-label="Brain region by time of day overview"></div>
+      <div id="overview-legend"></div>
+      <p class="note"><span class="gloss" tabindex="0" data-gloss="zt">ZT</span> = hours after the lights turn on (lights on ZT0–12, off ZT12–24). “4 vs 4” is the number of mice in each group.</p>
+    </section>
+
+    <section class="panel volcano-panel">
+      <div class="panelhead"><div><p class="eyebrow">VIEW 2 · INSPECT ONE COMPARISON</p><h2>Which genes changed, and how much?</h2></div><button id="download" class="textbutton">Download this table (CSV)</button></div>
+      <p id="volcano-sub" class="description"></p>
+      <div class="volcano-wrap"><canvas id="volcano-canvas" aria-label="Volcano plot: each dot is one gene. Use the gene buttons or search to select a gene." role="img"></canvas><svg id="volcano-axis" aria-hidden="true"></svg></div>
+      <div class="legend" id="volcano-legend"><span><i class="swatch down"></i><b id="leg-down">Less active in first group</b></span><span><i class="swatch up"></i><b id="leg-up">More active in first group</b></span><span><i class="swatch muted"></i>Not clearly changed</span><span>◎ Selected gene</span></div>
+      <p id="volcano-note" class="note"></p>
+      <p class="candidate-label">Most confident genes. Click one to follow it:</p>
+      <div id="candidates" class="candidate-list" aria-label="Candidate genes"></div>
+    </section>
+
+    <section class="panel expression-panel">
+      <div class="panelhead"><div><p class="eyebrow">VIEW 3 · LOOK BEYOND THE AVERAGE</p><h2 id="expression-title">One gene, through the day</h2></div><button id="clear-gene" class="textbutton">Clear gene</button></div>
+      <p id="expression-sub" class="description">Pick a gene in View 2, View 4 or the search box to see every individual mouse.</p>
+      <div id="expression"></div>
+      <div class="legend phenotype"><span>● Control (never stressed)</span><span>▲ Resilient</span><span>■ Susceptible</span></div>
+      <p class="note">Each mark is one mouse. Short bars and lines show group averages. Different mice were sampled at each time, so a line is <em>not</em> one mouse followed over time. The shaded columns are lights-off (night).</p>
+    </section>
+
+    <section class="panel network-panel">
+      <div class="panelhead"><div><p class="eyebrow">VIEW 4 · WHAT DO THE GENES DO?</p><h2>Genes and the processes they share</h2></div><button id="clear-term" class="textbutton">Clear process</button></div>
+      <p id="network-sub" class="description"></p>
+      <div id="network"></div>
+      <div id="term-buttons" class="term-list"></div>
+      <p id="network-note" class="note"></p>
+      <p class="note">● Gene (colour = more or less active) · ▭ <span class="gloss" tabindex="0" data-gloss="go">biological process (Gene Ontology)</span>. A line means “this gene is known to take part in this process”. It does <em>not</em> mean one gene controls another.</p>
+    </section>
+  </div>
+
+  <section id="glossary" class="glossary" aria-labelledby="glossary-title">
+    <div class="sectionhead"><p class="eyebrow">PLAIN-LANGUAGE GLOSSARY</p><h2 id="glossary-title">Words used on this page</h2></div>
+    <dl id="glossary-list"></dl>
+  </section>
+
+  <details class="data-notes"><summary>Read the evidence carefully: what these charts can and cannot tell you</summary><div>
+    <p><strong>This is exploration, not proof.</strong> We re-analysed the authors' public data with a standard tool (DESeq2). Each box in View 1 is a separate comparison inside one brain region and one time of day. A positive log₂ fold change means the gene is more active in the first group named. Changing the cutoffs only re-sorts stored results; it does not re-run any statistics.</p>
+    <p><strong>Missing is not zero.</strong> Some genes have too few reads for a reliable test. They have no adjusted p-value, so they are left out of View 2's vertical axis, but you can still search for them and see their activity in View 3.</p>
+    <p><strong>Limits.</strong> Only male mice were used, with 3–5 mice per group. Each sample is a piece of brain tissue containing many cell types, and everything comes from one experiment. A gene that is significant at one time but not another does not prove a formal time effect. The two regions come from the same mice, but we do not test differences between regions.</p>
+  </div></details>
+</section>
+
+<footer>
+  <p>Data: <a href="https://doi.gin.g-node.org/10.12751/g-node.jj57l9/">Narain et al. (2024), GIN · CC BY 4.0</a> · Built with <a href="https://d3js.org/">D3.js v7</a><br>Yixuan Du · Yi Yao · Jinyu Zheng / NYU Shanghai, Information Visualization, Fall 2026</p>
+  <p><a href="methods.html">Methods, provenance &amp; credits</a><br><a href="data/manifest.json">Analysis manifest</a> · <a href="data/samples.csv">Sample metadata</a></p>
+</footer>
+</main>
+<div id="tooltip" role="tooltip" hidden></div>
+</body>
+</html>

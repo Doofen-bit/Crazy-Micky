@@ -1,93 +1,94 @@
-# Stress Atlas — Stress, across time
+# Stress Atlas: Stress, across time
 
-Information Visualization 期末项目。四个真实数据驱动的 D3 联动视图：context overview、volcano、temporal expression、gene–GO network。
+**Why do some stressed mice bounce back?** Stress Atlas is an interactive D3 visualization that lets anyone, with no biology background needed, explore a real public brain experiment. It shows which genes change in mice after chronic social stress, in which brain region, and at what time of day.
 
-- 网站：https://doofen-bit.github.io/Crazy-Micky/
-- 仓库：https://github.com/Doofen-bit/Crazy-Micky
-- 团队：Yixuan Du / yd2927；Yi Yao / yy5075；Jinyu Zheng / jz6539。
-- 数据：[Narain et al. 2024](https://doi.org/10.1038/s41398-024-03100-w)，[GIN](https://doi.gin.g-node.org/10.12751/g-node.jj57l9/)，CC BY 4.0。
-- 当前代码与文档为 AI-assisted implementation；成员需要理解、复核并修改个人反思后提交。没有代替团队完成教师讨论、真实用户访谈或课堂演讲。
+- **Live site (GitHub Pages):** https://doofen-bit.github.io/Crazy-Micky/
+- **Team:** Yixuan Du (yd2927) · Jinyu Zheng (jz6539) · Yi Yao (yy5075). NYU Shanghai, Information Visualization, Fall 2026
+- **Data:** [Narain et al. 2024, *Translational Psychiatry*](https://doi.org/10.1038/s41398-024-03100-w). Raw data on [GIN](https://doi.gin.g-node.org/10.12751/g-node.jj57l9/), CC BY 4.0.
 
-## 直接查看
+## The experiment in 30 seconds
 
-Windows 双击 `start_explorer.cmd`，打开 `http://localhost:8000`。需要 Python。也可以运行：
+1. **Stress.** For 15 days, each test mouse met a larger, aggressive mouse every day. Control mice were never stressed.
+2. **Sort.** A social test split the stressed mice: *resilient* mice still approached a new mouse; *susceptible* mice avoided it.
+3. **Sample.** Brain tissue was collected at four times of day (ZT4 and ZT10 with lights on, ZT16 and ZT22 with lights off). It came from two regions: the **SCN**, the master clock, and the **habenula (Hb)**, which reacts to bad experiences.
+4. **Measure.** RNA-seq counted how active each of ~46,000 genes was in each of 93 samples from 47 mice.
+
+**Question:** which genes differ between the groups, and does it depend on brain region and time of day?
+
+## The visualization
+
+| View | Chart | Linked behaviour |
+|---|---|---|
+| 1 · When and where do genes change? | Region × time grid; printed counts + sequential colour | Click a box → Views 2, 3, 4 update |
+| 2 · Which genes changed, and how much? | Volcano plot (Canvas, ~16k genes): change size × confidence | Click a gene → Views 3, 4 update |
+| 3 · One gene, through the day | Every mouse at 4 times; shape + colour per group; mean lines | Gene stays selected when the context changes |
+| 4 · What do the genes do? | **Node-link** bipartite diagram: genes ↔ Gene Ontology processes | Click a process → its genes are outlined in View 2 |
+
+Plain-language layer: an illustrated experiment primer, a hover glossary for every technical term, worded axes and tooltips, day/night shading, and a three-step guided story ("Follow the story"). Colour is never the only cue: we use printed numbers, shapes (● ▲ ■), line styles and outlines.
+
+## Run locally
+
+The site is static (HTML/CSS/JS, D3 bundled in `site/vendor/`), with no backend and no CDN.
 
 ```powershell
 python -m http.server 8000 --bind 127.0.0.1 --directory site
 ```
 
-不要直接双击 `site/index.html`，浏览器会阻止 `file://` 下的 JSON 加载。D3 已放在本地，不依赖 CDN。网站不需要后端。
+Then open http://localhost:8000. On Windows you can also double-click `start_explorer.cmd`. Do not open `site/index.html` directly: browsers block JSON loading from `file://`.
 
-## 交付文件
+## Deliverables (`docs/`)
 
-| 路径 | 用途 |
+| File | Purpose |
 |---|---|
-| `docs/Final_Report.pdf` | 最多5页的英文项目报告；Reflection 包含待成员自行改写的明确标记 |
-| `docs/Final_Report_Editable.docx` | 可编辑报告文本版 |
-| `docs/Proposal_Updated.pdf` | 最多3页，按4.1–4.7顺序，含仓库与网站地址 |
-| `docs/Proposal_Updated_Editable.docx` | 可编辑 proposal 文本版 |
-| `docs/Presentation.pptx` / `.pdf` | 12页演示，PPTX 含中文 speaker notes |
-| `docs/Demo_Script_CN.txt` | 三人演示路径、分工建议和答辩提醒 |
-| `analysis/Stress_RNAseq_Workbench.Rmd` / `.html` | 可解释、可重运行的统计 workbench |
-| `docs/source-code-review.md` | 实际课堂代码逐步对应与元数据证据 |
-| `docs/figures/` | 由本项目结果生成的 PNG/PDF 图 |
-| `docs/dashboard-*.png`, `docs/view-*.png` | 实际网页截图 |
-| `audit/` | 输入、模型、导出、浏览器、部署验证记录 |
-| `results/contrasts/` | 完整24个 DESeq2 比较 CSV |
-| `site/` | GitHub Pages 静态网站，含全部按需数据 |
+| `Proposal_Updated.pdf` / `_Editable.docx` | Proposal, sections 4.1–4.7 (3 pages) |
+| `Final_Report.pdf` / `_Editable.docx` | Final report with changes and reflection (5 pages) |
+| `Presentation.pptx` / `.pdf` | 15-slide final presentation; speaker notes contain the script |
+| `Presentation_Script.md` / `.docx` | Word-for-word English script for three speakers, with operator cues and Q&A prep |
+| `Professor_Brief.pdf` / `.docx` | One-page project introduction for the instructor (no biology assumed) |
+| `Professor_Meeting_Pitch.md` | 2-minute spoken pitch, questions to ask, likely questions |
+| `dashboard-*.png`, `view-*.png`, `figures/` | Screenshots and figures generated from the real site and results |
+| `source-code-review.md` | Mapping to the classroom RNA-seq code |
 
-## 分析约定
+## Pipeline and reproduction
 
-96份原始 counts → 93份纳入组织样本、47只动物。排除作者列出的 L1R-E05_5、S1R-E05_5、L2S-E05_1。A15_A 仅在 analysis ID/region 映射交换一次；全基因比例验证见 `docs/metadata-content-matching.json`。C01_E1 使用原始已纠正 ZT4。原始数据、ZIP 和 Genomics 课堂文件没有被修改。
-
-每个 region×ZT 内任一 phenotype median count≥10 的基因保留。DESeq2 median-ratio size factors 在每个脑区全部纳入样本上估计并固定用于四个时间模型；8个 `~phenotype` 三组模型，24个显式 contrasts。正 LFC 表示第一个组更高，未经 shrinkage。独立过滤固定 alpha=.05，保留 NA。默认展示 p-adj<.05、|log2FC|>.5，阈值可调整，但不会重新拟合模型。
-
-GO 使用实际 org.Mm.eg.db 3.23.0、GO.db 3.23.1 的 GOALL BP。Python 实现 hypergeometric / BH（并非声称调用 clusterProfiler）。背景为该对比 finite-padj 且有BP注释的基因，前景为默认阈值DEG，term背景大小10–500，所有合格term进入BH。GO富集固定默认阈值；没有显著富集时显示 annotation-only。边表示 membership，非因果。组均值的时间连线不代表同一动物。
-
-这是 Information Visualization 交付，参考课堂方法；不声称已完成另一门 GB 作业的所有要求，亦非论文方法的精确复现。
-
-## 重现
-
-Python 3.11+（本机3.14），R 4.6.1 / Bioconductor 3.23（本次实际环境）。依赖版本见 `requirements.txt`、`results/session_info.txt`。
-
-原始数据放在项目同级路径：
-`../narain_et_al-2024-translational_psychiatry/narain_et_al-2024-translational_psychiatry/`。
-原ZIP放在同级 `../narain_et_al-2024-translational_psychiatry-master.zip`。
-ZIP SHA256：`edefea6fc5042d0eb377a05c32585d665fd0b9001a014901d795b48f9df75495`。
+```
+96 raw count files ──► prepare_inputs.py / verify_label_provenance.py   (audit, label fixes)
+                   ──► analysis/run_analysis.R                          (DESeq2: 8 models, 24 comparisons)
+                   ──► export_site.py                                    (GO enrichment, chunked JSON for the browser)
+                   ──► site/ (index.html + app.js + styles.css, D3 v7)   (all four views share one state object)
+                   ──► .github/workflows/pages.yml                       (GitHub Actions → GitHub Pages)
+```
 
 ```powershell
 python -m pip install -r requirements.txt
-& 'D:\R-4.6.1\bin\Rscript.exe' scripts/setup.R
+Rscript scripts/setup.R
 python scripts/verify_label_provenance.py
 python scripts/prepare_inputs.py
-& 'D:\R-4.6.1\bin\Rscript.exe' analysis/run_analysis.R
+Rscript analysis/run_analysis.R
 python scripts/export_site.py
-python scripts/validate_results.py
-& 'D:\R-4.6.1\bin\Rscript.exe' scripts/render_workbench.R
+python scripts/validate_results.py          # scientific invariants
 ```
 
-Windows 启动 R 时本机 locale 有非致命警告；完整统计运行见 session 与输出校验。`scripts/setup.R` 只补缺包，不自动更新已有包。若Rscript在PATH上可替换绝对路径。大体积 raw/count/GO 中间文件未提交 Git；可按以上步骤重建，静态网页不需要它们。
+The raw dataset is expected next to this folder at `../narain_et_al-2024-translational_psychiatry/…`; large intermediates are not committed. Tested with Python 3.14, R 4.6.1 / Bioconductor 3.23 (`results/session_info.txt`).
 
-浏览器测试及报告生成（先在另一终端启动上面的 HTTP 服务）：
+Tests and documents need the local server running on port 8000:
 
 ```powershell
 python -m playwright install chromium
-python scripts/browser_qa.py
-python scripts/build_deliverables.py
+python scripts/browser_qa.py                # all 24 contexts, linked interactions, empty states, 1440/1366/390 px
+python scripts/build_deliverables.py        # report + proposal
+python scripts/capture_slide_images.py      # screenshots for slides
+python scripts/build_presentation.py        # slides (PPTX; PDF via PowerPoint on Windows) + script
+python scripts/build_professor_brief.py     # one-page brief
 ```
 
-报告PDF由 ReportLab生成，可编辑Word为同源文本版。演示PPTX为可编辑文本/图像，PDF作为离线备份。
+## Analysis summary
 
-## 发布
+- 96 raw files → 93 samples / 47 mice after the authors' three documented exclusions (L1R-E05_5, S1R-E05_5, L2S-E05_1). Mouse A15_A's two brain regions were swapped in the file names. We proved the swap by matching every gene's values and fixed it exactly once. C01_E1 keeps its corrected ZT4 label.
+- DESeq2 `~ phenotype` within each region × time (8 models, 24 comparisons). Size factors are estimated per region. Genes are kept if any group's median raw count is ≥ 10. Default "changed gene": adjusted p < .05 and |log₂ fold change| > .5. Browser cutoffs only re-sort stored results; nothing is refitted in the browser.
+- GO Biological Process from `org.Mm.eg.db` 3.23.0 / `GO.db` 3.23.1. Hypergeometric test with Benjamini–Hochberg correction. Background = annotated genes with a finite adjusted p. Missing statistics are kept as missing (never zero).
+- Limits: 3–5 male mice per group and one study. Significance at one time but not another is not a formal time effect, and network edges mean membership, not causation.
 
-`.github/workflows/pages.yml` 将 `site/` 部署到 GitHub Pages。仓库 Settings → Pages → Build and deployment 选择 GitHub Actions。推送 main 后自动部署。以 `audit/deployment.json` 和 Actions 返回值为实际部署证据，不能把配置文件本身当成发布成功。
+## Credits and AI use
 
-## 评估与待团队完成
-
-自动检查覆盖原始ID、排除、模型rank、反向contrast、全部标准化值、24个过滤/NA/export、GO p-value/BH、24个页面context和联动/空状态；1366/1440/390px响应式检查。未进行真人用户研究，也不代替科学同行复核。
-
-提交前：团队讨论并修订模型解释；各成员改写个人反思和实际分工；按课程要求完成教师讨论与课堂演示；再次检查网站可公开访问。参见 `AI_USAGE.md` 和 `DECISIONS.md`。
-
-## 外部代码与署名
-
-D3.js 7.9.0 (ISC)，本地vendor文件保留版权说明，完整license在 `site/vendor/D3-LICENSE.txt`。没有使用第三方网页模板或论文图片。数据CC BY4.0，模型引用Love/Huber/Anders (2014)。Codex帮助审计、编码、测试与起草，记录于AI_USAGE.md。
+D3.js 7.9.0 (ISC, licence in `site/vendor/D3-LICENSE.txt`); DESeq2 (Love, Huber & Anders 2014); Bioconductor mouse annotations; data CC BY 4.0. No third-party templates or article figures were used. AI assistance: OpenAI Codex (pipeline, D3 implementation, tests, report drafts) and Anthropic Claude (plain-language revision, slides, script, brief). Details and checks are in [`AI_USAGE.md`](AI_USAGE.md); decisions are in [`DECISIONS.md`](DECISIONS.md).

@@ -11,6 +11,11 @@
     "contrast->views",
     "reset"
   ],
+  "plain_language": [
+    "glossary hover",
+    "three-step guided story",
+    "example-gene shortcut"
+  ],
   "edge_states": [
     "no selection",
     "filtered all-zero gene",

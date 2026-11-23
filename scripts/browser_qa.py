@@ -14,6 +14,17 @@ with sync_playwright() as p:
     baseline=page.evaluate('window.__explorer')
     assert baseline['context']['id']=='SCN_zt16_resilient_vs_control'
     page.screenshot(path=str(ROOT/'docs/dashboard-overview.png'),full_page=True)
+    # Plain-language layer: glossary entries, hover definitions, guided story and example-gene shortcut.
+    assert page.locator('#glossary-list > div').count()>=12
+    page.locator('.gloss').first.hover();assert not page.locator('#tooltip').is_hidden()
+    assert page.locator('#expression .empty .example').count()==1
+    page.locator('[data-tour="context"]').click();page.wait_for_function("document.querySelector('#story').textContent.includes('Step 1')")
+    page.locator('[data-tour="gene"]').click();page.wait_for_function('window.__explorer.state.gene !== null')
+    assert 'Step 2' in page.locator('#story').inner_text()
+    page.locator('[data-tour="process"]').click();page.wait_for_function('window.__explorer.state.term !== null')
+    assert 'Step 3' in page.locator('#story').inner_text()
+    page.locator('#reset').click();page.wait_for_function('window.__explorer.state.gene === null && window.__explorer.state.term === null')
+    assert page.locator('#story').is_hidden()
     page.locator('#candidates button').first.click()
     page.wait_for_function('window.__explorer.state.gene !== null')
     page.wait_for_selector('.sample-point')
@@ -47,7 +58,7 @@ with sync_playwright() as p:
     assert page.locator('#expression .empty').count()==1
     page.locator('[data-context="SCN_zt10_resilient_vs_control"]').click()
     page.wait_for_function('window.__explorer.context.id === "SCN_zt10_resilient_vs_control"')
-    assert '0 passing genes' in page.locator('#volcano-sub').inner_text()
+    assert '0 genes clearly changed' in page.locator('#volcano-sub').inner_text()
     assert 'Annotation only' in page.locator('#network-sub').inner_text()
     assert 'No genes pass' in page.locator('#network-note').inner_text()
     page.locator('#reset').click();page.wait_for_function('window.__explorer.context.id === "SCN_zt16_resilient_vs_control"')
@@ -82,6 +93,6 @@ with sync_playwright() as p:
     fixture.goto('http://127.0.0.1:8000');fixture.wait_for_function('window.__explorer?.rows > 0')
     assert 'No eligible GO' in fixture.locator('#network').inner_text()
     fixture.close()
-    result={'passed':True,'browser':'Chromium via Playwright','contexts_loaded':24,'linked_transitions':['context->volcano/network/profile','gene->profile/network','network gene->profile','process->volcano','clear process','contrast->views','reset'],'edge_states':['no selection','filtered all-zero gene','search miss','NA statistics','real zero-DEG context','annotation-only network','no-GO mocked response (test only)'],'responsive_widths':[1440,1366,390],'console_errors':errors,'http_errors':bad}
+    result={'passed':True,'browser':'Chromium via Playwright','contexts_loaded':24,'linked_transitions':['context->volcano/network/profile','gene->profile/network','network gene->profile','process->volcano','clear process','contrast->views','reset'],'plain_language':['glossary hover','three-step guided story','example-gene shortcut'],'edge_states':['no selection','filtered all-zero gene','search miss','NA statistics','real zero-DEG context','annotation-only network','no-GO mocked response (test only)'],'responsive_widths':[1440,1366,390],'console_errors':errors,'http_errors':bad}
     (ROOT/'audit/browser_validation.json').write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2));browser.close()

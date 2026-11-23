@@ -1,5 +1,16 @@
 # AI assistance record
 
+## Plain-language revision, slides and script — 2026-11-23 (Anthropic Claude, Claude Code)
+
+User (Yixuan Du) asked Claude to review the Codex-built project against the course guideline, make it understandable for a general audience, redo the final-presentation slides and three-person speaker script, prepare a one-page brief for the instructor meeting, test the program and push to GitHub.
+
+Component/files: `site/index.html`, `site/app.js`, `site/styles.css`, `site/methods.html` (plain-language layer: experiment primer, hover glossary, worded titles/axes/tooltips, day/night shading, readable GO process names, three-step guided story, example-gene shortcut, narrow-screen label variants); `scripts/browser_qa.py` (new checks for glossary, story and example shortcut); `scripts/build_deliverables.py` (audience and design text, slide code moved out); new `scripts/capture_slide_images.py`, `scripts/build_presentation.py`, `scripts/build_professor_brief.py`; `docs/Presentation.pptx/.pdf`, `docs/Presentation_Script.md/.docx`, `docs/Professor_Brief.pdf/.docx`, `docs/Professor_Meeting_Pitch.md`; English `README.md`.
+Not changed: raw data, R/Python statistics, exported results, or any analysis decision. All numbers on slides and in the brief are read from `results/` at build time.
+Checks performed: `python scripts/validate_results.py` (PASS); `python scripts/browser_qa.py` (PASS: 24 contexts, linked transitions, edge states, glossary/story, 1440/1366/390 px, no console or HTTP errors); page limits (report 5, proposal 3, brief 1); visual review of every slide.
+Team reviewer: pending. Each speaker should rehearse and rewrite their part of the script in their own words.
+Remaining limitations: no human user study; experiment descriptions are simplified for lay readers and should be checked by Jinyu (GB background).
+Source: Anthropic Claude, https://claude.ai/.
+
 ## Implementation completed 2026-11-23 (current record)
 
 User requested completion of the Information Visualization project from the supplied handoff, raw dataset and actual Genomics classroom code, then supplied the public repository https://github.com/Doofen-bit/Crazy-Micky.git for publication.
