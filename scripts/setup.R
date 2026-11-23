@@ -1,0 +1,10 @@
+dir.create('.r-library',showWarnings=FALSE)
+.libPaths(c('.r-library', '../../Genomics/.r-library', .libPaths()))
+options(timeout=1200)
+if (!requireNamespace('BiocManager',quietly=TRUE)) install.packages('BiocManager',lib='.r-library',repos='https://cloud.r-project.org')
+required <- c('DESeq2','AnnotationDbi','org.Mm.eg.db','GO.db','jsonlite','rmarkdown','knitr')
+missing <- required[!vapply(required,requireNamespace,logical(1),quietly=TRUE)]
+if(length(missing)) BiocManager::install(missing,lib='.r-library',ask=FALSE,update=FALSE)
+cat(R.version.string, '\n')
+print(sapply(c('DESeq2','jsonlite','rmarkdown','knitr','org.Mm.eg.db','GO.db'),requireNamespace,quietly=TRUE))
+print(rmarkdown::find_pandoc())

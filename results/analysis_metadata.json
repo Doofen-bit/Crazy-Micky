@@ -1,0 +1,15 @@
+{
+  "analysis_version": "1.0.0",
+  "provenance": "team_reanalysis",
+  "design": "Within region and ZT: ~ phenotype; three groups, three explicit contrasts",
+  "normalization": "DESeq2 median ratios across included samples within region; same factors supplied to each stratum",
+  "filter": "Any phenotype median raw count >= 10 within stratum",
+  "lfc_shrinkage": false,
+  "alpha": 0.05,
+  "abs_lfc_cutoff": 0.5,
+  "independent_filtering": true,
+  "annotation_package": "3.23.0",
+  "GO_db_version": "3.23.1",
+  "DESeq2_version": "1.52.0",
+  "n_samples": 93
+}

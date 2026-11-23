@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "browser": "Chromium via Playwright",
+  "contexts_loaded": 24,
+  "linked_transitions": [
+    "context->volcano/network/profile",
+    "gene->profile/network",
+    "network gene->profile",
+    "process->volcano",
+    "clear process",
+    "contrast->views",
+    "reset"
+  ],
+  "edge_states": [
+    "no selection",
+    "filtered all-zero gene",
+    "search miss",
+    "NA statistics",
+    "real zero-DEG context",
+    "annotation-only network",
+    "no-GO mocked response (test only)"
+  ],
+  "responsive_widths": [
+    1440,
+    1366,
+    390
+  ],
+  "console_errors": [],
+  "http_errors": []
+}

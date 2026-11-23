@@ -1,0 +1,24 @@
+{
+  "raw_samples": 96,
+  "included_samples": 93,
+  "raw_genes": 46603,
+  "all_zero_genes": 11159,
+  "animals": 48,
+  "included_animals": 47,
+  "corrected_content_mappings": [
+    {
+      "sample_id_source": "L1S-A15_A",
+      "sample_id_analysis": "S1S-A15_A"
+    },
+    {
+      "sample_id_source": "S1S-A15_A",
+      "sample_id_analysis": "L1S-A15_A"
+    }
+  ],
+  "exclusions": [
+    "L1R-E05_5",
+    "L2S-E05_1",
+    "S1R-E05_5"
+  ],
+  "zip_sha256": "edefea6fc5042d0eb377a05c32585d665fd0b9001a014901d795b48f9df75495"
+}

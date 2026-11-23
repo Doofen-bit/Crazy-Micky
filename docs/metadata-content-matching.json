@@ -1,0 +1,90 @@
+[
+  {
+    "author_table": "timeseries_lhb_susceptible.csv",
+    "author_column": "ZT4_A15-A_4",
+    "raw_sample": "L1S-A15_A",
+    "genes": 35364,
+    "nonzero_ratios": 20314,
+    "median_raw_over_processed": 1.1274117769433116,
+    "max_relative_reconstruction_error": 4017.499999999995,
+    "median_relative_reconstruction_error": 0.20985899873368474,
+    "zero_pattern_disagreements": 4468
+  },
+  {
+    "author_table": "timeseries_lhb_susceptible.csv",
+    "author_column": "ZT4_A15-A_4",
+    "raw_sample": "S1S-A15_A",
+    "genes": 35364,
+    "nonzero_ratios": 22657,
+    "median_raw_over_processed": 1.2065283928691595,
+    "max_relative_reconstruction_error": 4.807430882511563e-15,
+    "median_relative_reconstruction_error": 1.9601178917520005e-16,
+    "zero_pattern_disagreements": 0
+  },
+  {
+    "author_table": "timeseries_scn_susceptible.csv",
+    "author_column": "ZT4_A15-A_1",
+    "raw_sample": "L1S-A15_A",
+    "genes": 35364,
+    "nonzero_ratios": 22439,
+    "median_raw_over_processed": 1.1061142632850955,
+    "max_relative_reconstruction_error": 4.850638409455617e-15,
+    "median_relative_reconstruction_error": 3.43464766530562e-16,
+    "zero_pattern_disagreements": 0
+  },
+  {
+    "author_table": "timeseries_scn_susceptible.csv",
+    "author_column": "ZT4_A15-A_1",
+    "raw_sample": "S1S-A15_A",
+    "genes": 35364,
+    "nonzero_ratios": 20314,
+    "median_raw_over_processed": 1.183736316848961,
+    "max_relative_reconstruction_error": 2832.8245614035077,
+    "median_relative_reconstruction_error": 0.20888839501251627,
+    "zero_pattern_disagreements": 4468
+  },
+  {
+    "author_table": "timeseries_lhb_control.csv",
+    "author_column": "ZT10_C01-E1_1",
+    "raw_sample": "L1C-C01_E1",
+    "genes": 35364,
+    "nonzero_ratios": 21961,
+    "median_raw_over_processed": 0.8159327915576845,
+    "max_relative_reconstruction_error": 4.972935793412123e-15,
+    "median_relative_reconstruction_error": 2.842170943040401e-16,
+    "zero_pattern_disagreements": 0
+  },
+  {
+    "author_table": "timeseries_lhb_control.csv",
+    "author_column": "ZT10_C01-E1_1",
+    "raw_sample": "S1C-C01_E1",
+    "genes": 35364,
+    "nonzero_ratios": 19749,
+    "median_raw_over_processed": 1.1240776224119153,
+    "max_relative_reconstruction_error": 3821.6276595744594,
+    "median_relative_reconstruction_error": 0.24883119283617927,
+    "zero_pattern_disagreements": 4657
+  },
+  {
+    "author_table": "timeseries_scn_control.csv",
+    "author_column": "ZT10_C01-E1_1",
+    "raw_sample": "L1C-C01_E1",
+    "genes": 35364,
+    "nonzero_ratios": 19749,
+    "median_raw_over_processed": 0.8767707971898563,
+    "max_relative_reconstruction_error": 2096.3090001455066,
+    "median_relative_reconstruction_error": 0.2568515873505658,
+    "zero_pattern_disagreements": 4657
+  },
+  {
+    "author_table": "timeseries_scn_control.csv",
+    "author_column": "ZT10_C01-E1_1",
+    "raw_sample": "S1C-C01_E1",
+    "genes": 35364,
+    "nonzero_ratios": 22194,
+    "median_raw_over_processed": 1.207891655004294,
+    "max_relative_reconstruction_error": 4.7442787079993394e-07,
+    "median_relative_reconstruction_error": 1.6310150628488216e-08,
+    "zero_pattern_disagreements": 0
+  }
+]

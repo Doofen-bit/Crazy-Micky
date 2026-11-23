@@ -1,0 +1,11 @@
+.r-library/
+analysis/input/counts.csv
+results/normalized_counts.csv
+results/annotation_edges.csv
+results/go_enrichment_all.csv
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+*.zip
+results/analysis_run.log

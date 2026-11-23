@@ -1,0 +1,132 @@
+---
+title: "Stress Atlas: RNA-seq analysis workbench"
+author: "Information Visualization project · AI-assisted implementation for team review"
+date: "2026-11-23"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    self_contained: true
+params:
+  recompute: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE,message=FALSE,warning=TRUE)
+root <- normalizePath('..')
+knitr::opts_knit$set(root.dir=root)
+.libPaths(c(file.path(root,'.r-library'),file.path(root,'../../Genomics/.r-library'),.libPaths()))
+```
+
+# Purpose and provenance
+
+This notebook explains the completed Information Visualization reanalysis and
+displays its actual outputs. It is adapted from the local classroom notebook
+`Genomics/gb_RNAseq_student.Rmd`; the original file is unchanged. Source data:
+[Narain et al., 2024](https://doi.org/10.1038/s41398-024-03100-w),
+[GIN dataset](https://doi.gin.g-node.org/10.12751/g-node.jj57l9/).
+This is not an exact reproduction of the paper's statistical workflow.
+
+The default render reads saved results. To refit, first run
+`python scripts/prepare_inputs.py`, then render with `params=list(recompute=TRUE)`.
+The analysis requires raw integer counts, not the author-normalized tables.
+
+```{r optional-recompute}
+if (isTRUE(params$recompute)) source('analysis/run_analysis.R')
+```
+
+# Metadata decisions
+
+93 included tissues represent 47 animals. Source and analysis identifiers are
+kept separately. C01_E1 is ZT4, following the corrected raw filenames. A15_A
+brain-region labels are swapped once in analysis metadata: full-gene matching
+to the author's normalized tables reconstructs the opposite source count file
+to floating-point precision. Author exclusions are L1R-E05_5, S1R-E05_5 and
+L2S-E05_1. No additional outcome-driven exclusions were applied.
+
+```{r sample-design}
+samples <- read.csv('results/samples.csv')
+stopifnot(nrow(samples)==93, !anyDuplicated(samples$sample_id_analysis))
+knitr::kable(as.data.frame(xtabs(~region+zt+phenotype,samples)))
+```
+
+# Classroom steps and explicit adaptations
+
+The lesson's core pipeline is retained: count filtering, DESeq2 negative-binomial
+models, explicit pairwise contrasts, annotated genes, and GO overrepresentation.
+Because these data already contain counts, BAM counting is unnecessary.
+
+- Filtering: retain a gene if any phenotype's median raw count is at least 10
+  within a region/time stratum.
+- Normalization: DESeq2 median ratios estimated jointly across times within
+  each region; the same factors feed expression profiles and stratum models.
+- Models: eight independent `~ phenotype` fits using all three groups; three
+  explicit contrasts per fit. There is no cross-region or interaction test.
+- Effects: unshrunken log2 fold changes, positive for the first named phenotype.
+- Default exploration: p-adj < .05 and absolute log2FC > .5, unlike the classroom
+  defaults .1 / 1. Independent filtering remains fixed at alpha=.05.
+- QC: PCA on log2 normalized counts for 500 variable genes; explicitly not VST.
+- GO: mouse OrgDb in place of Arabidopsis TAIR; Python implements one-sided
+  hypergeometric/BH with finite-padj GO-mapped background, instead of claiming
+  execution of clusterProfiler. This InfoVis deliverable does not add GSEA.
+
+# Executable analysis source
+
+The following is the exact source used for model fitting. It is printed for
+review and executed above only when recompute is requested.
+
+```{r analysis-source, results='asis', echo=FALSE}
+cat('```r\n',paste(readLines('analysis/run_analysis.R'),collapse='\n'),'\n```\n',sep='')
+```
+
+# Results and meaningful checks
+
+```{r actual-results}
+overview <- read.csv('results/overview.csv')
+overview$DEGs <- overview$up+overview$down
+knitr::kable(overview[,c('region','zt','contrast','tested_genes','unavailable_padj','DEGs','n_group1','n_group2')])
+validation <- read.csv('audit/model_validation.csv')
+stopifnot(nrow(overview)==24,all(validation$reverse_contrast_pass))
+knitr::kable(validation)
+```
+
+Resilient/control has 779 passing genes in SCN ZT16 and 225 in Hb ZT16 in this
+reanalysis. That pattern does not itself establish a phenotype-by-time
+interaction. Counts across contexts depend on power and the tested universe.
+Missing p-values and adjusted p-values remain NA; they are not evidence for
+zero effects. Source-to-export validation independently reconstructs filters,
+all normalized counts, exported contrast precision and GO p-values/BH adjustment.
+
+```{r example-candidates}
+r <- read.csv('results/contrasts/SCN_zt16_resilient_vs_control.csv')
+knitr::kable(head(r[order(r$padj),c('ensembl_id','symbol','log2FoldChange','padj')],10),digits=7)
+```
+
+# GO annotation and enrichment
+
+GOALL BP memberships include ancestor terms. Background is the GO-mapped genes
+with finite adjusted p-values in a contrast. Eligible terms have 10–500 background
+genes. All eligible terms, including zero overlaps, enter BH correction. The
+network is annotation-only if no term passes q<.05. Default enrichment does not
+change when the website's exploration cutoffs change.
+
+```{r go-results}
+go <- read.csv('results/go_enrichment_all.csv')
+g <- subset(go,context=='SCN_zt16_resilient_vs_control')
+knitr::kable(head(g[order(g$padj),c('id','name','overlap_count','background_size','foreground_size','padj')],10),digits=10)
+knitr::kable(read.csv('results/annotation_metadata.csv'))
+```
+
+# Reproducibility and limitations
+
+The analysis scripts, hashes, exported values and browser acceptance checks
+are included. The all-zero gene, no-DEG and no-GO states are tested explicitly.
+Different sampling times contain different animals. Group means are descriptive;
+this dataset is small, male-only and bulk tissue, with possible unmodeled batch
+effects. Team scientific review and a human usability study remain separate
+from automated validation. OpenAI Codex assisted implementation and documentation;
+team members must understand and revise submitted work (see AI_USAGE.md).
+
+```{r actual-session, echo=FALSE}
+cat(paste(readLines('results/session_info.txt'),collapse='\n'))
+```

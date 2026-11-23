@@ -1,0 +1,202 @@
+{
+  "passed": true,
+  "contrasts": [
+    {
+      "id": "Hb_zt10_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 3
+    },
+    {
+      "id": "Hb_zt10_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 3
+    },
+    {
+      "id": "Hb_zt10_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 3,
+      "n_group2": 3
+    },
+    {
+      "id": "Hb_zt16_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt16_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt16_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt22_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt22_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt22_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt4_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 3,
+      "n_group2": 5
+    },
+    {
+      "id": "Hb_zt4_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 3,
+      "n_group2": 4
+    },
+    {
+      "id": "Hb_zt4_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 5
+    },
+    {
+      "id": "SCN_zt10_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 3
+    },
+    {
+      "id": "SCN_zt10_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt10_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 3
+    },
+    {
+      "id": "SCN_zt16_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt16_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt16_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt22_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt22_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt22_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt4_resilient_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 3,
+      "n_group2": 5
+    },
+    {
+      "id": "SCN_zt4_resilient_vs_susceptible",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 3,
+      "n_group2": 4
+    },
+    {
+      "id": "SCN_zt4_susceptible_vs_control",
+      "filter_pass": true,
+      "export_precision_pass": true,
+      "NA_preserved": true,
+      "n_group1": 4,
+      "n_group2": 5
+    }
+  ],
+  "normalization_all_values_pass": true,
+  "GO_hypergeometric_BH_pass": true,
+  "samples": 93,
+  "animals": 47,
+  "notes": "No simulated data; NA remains null; every model and all exported contrast records checked."
+}
