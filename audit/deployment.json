@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/Doofen-bit/Crazy-Micky",
+  "url": "https://doofen-bit.github.io/Crazy-Micky/",
+  "pages_status": null,
+  "build_type": "workflow",
+  "public_http_status": 200,
+  "title_found": true,
+  "runs": [
+    {
+      "id": 45137296767,
+      "head_sha": "3d577c3a5fb1a883ef60601d5f478dcfa9bff01e",
+      "name": "Deploy Stress Atlas to GitHub Pages",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/Doofen-bit/Crazy-Micky/actions/runs/45137296767",
+      "created_at": "2026-11-23T08:16:32Z"
+    }
+  ]
+}

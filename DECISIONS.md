@@ -38,3 +38,7 @@
 ## Completed here
 Read both course instructions; inspected uploaded ZIP; generated reproducible structural audit; wrote bilingual team brief, annotated wireframe, three-page discussion proposal and explicit Codex handoff. No biological DE/GO model has been fit. No Windows folder was read. No external messages sent. No repo/deployment created.
 
+
+## Publication verified
+
+GitHub Actions run 45137296767 succeeded for 3d577c3a5fb1a883ef60601d5f478dcfa9bff01e. Public site returned HTTP 200 and was tested in an unsigned-in Chromium session: 8 overview cells, Kcnk2 selection, 47 SCN expression points and GO:0042391 cross-highlighting, with no JavaScript errors. Evidence: audit/deployment.json and audit/public_browser_validation.json.

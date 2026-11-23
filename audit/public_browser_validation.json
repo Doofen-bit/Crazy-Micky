@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "url": "https://doofen-bit.github.io/Crazy-Micky/",
+  "http_status": 200,
+  "initial_and_gene_load_seconds": 5.92,
+  "gene": "Kcnk2, across the day",
+  "sample_points": 47,
+  "context": "SCN_zt16_resilient_vs_control",
+  "process_highlight": "GO:0042391",
+  "console_errors": [],
+  "signed_in": false
+}
