@@ -31,7 +31,7 @@ Plain-language layer: a detailed illustrated experiment primer (defeat and divid
 The site is static (HTML/CSS/JS, D3 bundled in `site/vendor/`), with no backend and no CDN.
 
 ```powershell
-python -m http.server 8000 --bind 127.0.0.1 --directory site
+python scripts/serve.py 8000
 ```
 
 Then open http://localhost:8000. On Windows you can also double-click `start_explorer.cmd`. Do not open `site/index.html` directly: browsers block JSON loading from `file://`.

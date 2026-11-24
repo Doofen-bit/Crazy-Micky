@@ -79,15 +79,6 @@ def write_pdf(name,pages):
   if i:flow.append(PageBreak())
   flow.extend(page)
  SimpleDocTemplate(str(D/name),pagesize=A4,rightMargin=48,leftMargin=48,topMargin=42,bottomMargin=55).build(flow,onFirstPage=footer,onLaterPages=footer)
-def docx_from_sections(name,sections):
- doc=Document();normal=doc.styles['Normal'];normal.font.name='Calibri';normal.font.size=Pt(10.5)
- for i,(title,paras,figure) in enumerate(sections):
-  if i:doc.add_page_break()
-  doc.add_heading(title,0 if i==0 else 1)
-  for text in paras:doc.add_paragraph(text)
-  if figure:doc.add_picture(str(figure),width=Inches(6.1))
- doc.save(D/name)
-
 team='Yixuan Du (yd2927) · Yi Yao (yy5075) · Jinyu Zheng (jz6539)'
 links=f'Repository: <link href="{REPO}" color="#007f79">{REPO}</link><br/>GitHub Pages: <link href="{URL}" color="#007f79">{URL}</link>'
 status='Updated 24 November 2026 after the instructor discussion; feedback is incorporated in 4.4. Team review and personal reflection revision remain required before final submission.'
@@ -108,19 +99,74 @@ proposal=[
 ]
 write_pdf('Proposal_Updated.pdf',proposal)
 
-# Editable counterparts contain the exact text extracted from the same flowables.
-def flow_text(pages):
- import re,html
- sections=[]
- for i,page in enumerate(pages):
-  texts=[]
-  for f in page:
-   if isinstance(f,Paragraph):texts.append(html.unescape(re.sub('<[^>]+>',' ',f.text)))
-   elif isinstance(f,Table):
-    for row in f._cellvalues:texts.append(' | '.join(html.unescape(re.sub('<[^>]+>',' ',getattr(x,'text',str(x)))) for x in row))
-  sections.append((texts[0],texts[1:],None))
- return sections
-docx_from_sections('Final_Report_Editable.docx',flow_text(report))
-docx_from_sections('Proposal_Updated_Editable.docx',flow_text(proposal))
+# Editable Word versions mirror the PDF flowables one-to-one: headings, rich text, real tables,
+# screenshots/figures and the layout sketch (rendered to PNG through a temporary PDF).
+def flow_docx(name, pages):
+ import re, html, tempfile
+ import pymupdf
+ from reportlab.graphics import renderPDF
+ from reportlab.graphics.shapes import Drawing as RLDrawing
+ from reportlab.platypus import Image as RLImage
+ from docx.shared import RGBColor, Cm
+ from docx.enum.text import WD_ALIGN_PARAGRAPH
+ doc = Document(); sec = doc.sections[0]
+ sec.page_width, sec.page_height = Cm(21.0), Cm(29.7)
+ for side in ('left_margin', 'right_margin'): setattr(sec, side, Cm(1.7))
+ sec.top_margin, sec.bottom_margin = Cm(1.5), Cm(1.9)
+ normal = doc.styles['Normal']; normal.font.name = 'Calibri'; normal.font.size = Pt(10)
+ normal.paragraph_format.space_after = Pt(4)
+ fp = sec.footer.paragraphs[0]; fp.text = 'STRESS ATLAS | Information Visualization | Fall 2026'; fp.runs[0].font.size = Pt(8)
+ tmp = Path(tempfile.mkdtemp())
+ def runs(par, markup, size=None, color=None, bold=False):
+  # Minimal inline-markup renderer for the ReportLab subset we use: <b>, <i>, <br/>, <link>, <font>.
+  for tok in re.split(r'(<[^>]+>)', markup.replace('<br/>', '\n')):
+   if not tok: continue
+   if tok.startswith('<'):
+    t = tok.lower()
+    if t == '<b>': runs.b = True
+    elif t == '</b>': runs.b = False
+    elif t == '<i>': runs.i = True
+    elif t == '</i>': runs.i = False
+    elif t.startswith('<link'): runs.link = True
+    elif t == '</link>': runs.link = False
+    continue
+   r = par.add_run(html.unescape(tok)); r.bold = bold or runs.b; r.italic = runs.i
+   if size: r.font.size = Pt(size)
+   if runs.link: r.font.color.rgb = RGBColor(0x00, 0x7F, 0x79); r.underline = True
+   elif color: r.font.color.rgb = RGBColor.from_string(color)
+ runs.b = runs.i = runs.link = False
+ def emit(f, k=[0]):
+  if isinstance(f, Paragraph):
+   st = f.style.name
+   if st == 'TitleX': doc.add_heading(re.sub('<[^>]+>', '', f.text), 0); return
+   if st in ('HeadX', 'SubX'): doc.add_heading(html.unescape(re.sub('<[^>]+>', '', f.text)), 1 if st == 'HeadX' else 2); return
+   par = doc.add_paragraph()
+   if st == 'SmallX': runs(par, f.text, 8.5, '536B7C')
+   else: runs(par, f.text)
+  elif isinstance(f, Table):
+   cells = f._cellvalues; t = doc.add_table(rows=len(cells), cols=len(cells[0])); t.style = 'Table Grid'
+   for r_, row in enumerate(cells):
+    for c_, v in enumerate(row):
+     cell = t.cell(r_, c_); cell.text = ''
+     items = v if isinstance(v, (list, tuple)) else [v]
+     runs(cell.paragraphs[0], '<br/>'.join(getattr(x, 'text', str(x)) for x in items), 8.5, None, bold=(r_ == 0))
+   if getattr(f, '_colWidths', None) and all(f._colWidths):
+    for c_, wpt in enumerate(f._colWidths):
+     for r_ in range(len(cells)): t.cell(r_, c_).width = Inches(wpt / 72)
+   doc.add_paragraph()
+  elif isinstance(f, RLImage):
+   doc.add_picture(f.filename, width=Inches(f.drawWidth / 72)); doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+  elif isinstance(f, RLDrawing):
+   k[0] += 1; pdf = tmp / f'd{k[0]}.pdf'; png = tmp / f'd{k[0]}.png'
+   renderPDF.drawToFile(f, str(pdf)); pymupdf.open(pdf)[0].get_pixmap(dpi=220).save(png)
+   doc.add_picture(str(png), width=Inches(f.width / 72))
+  elif hasattr(f, '_content'):
+   for g in f._content: emit(g)
+ for i, page in enumerate(pages):
+  if i: doc.add_page_break()
+  for f in page: emit(f)
+ doc.save(D / name)
+flow_docx('Final_Report_Editable.docx', report)
+flow_docx('Proposal_Updated_Editable.docx', proposal)
 
 print('Created report, proposal, editable Word files and figures. Slides: scripts/build_presentation.py.')

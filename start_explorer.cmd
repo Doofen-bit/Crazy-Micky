@@ -1,5 +1,7 @@
 @echo off
 cd /d "%~dp0"
-echo Open http://localhost:8000 in your browser. Press Ctrl+C to stop.
+echo Stress Atlas: opening http://localhost:8000 (latest local files, browser caching off).
+echo Keep this window open while presenting. Press Ctrl+C to stop.
 start "" http://localhost:8000
-python -m http.server 8000 --bind 127.0.0.1 --directory site
+python scripts\serve.py 8000
+pause
