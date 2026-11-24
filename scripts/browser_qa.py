@@ -18,13 +18,24 @@ with sync_playwright() as p:
     assert page.locator('#glossary-list > div').count()>=12
     page.locator('.gloss').first.hover();assert not page.locator('#tooltip').is_hidden()
     assert page.locator('#expression .empty .example').count()==1
-    page.locator('[data-tour="context"]').click();page.wait_for_function("document.querySelector('#story').textContent.includes('Step 1')")
+    page.locator('.guide [data-tour="context"]').click();page.wait_for_function("document.querySelector('#story').textContent.includes('Step 1')")
     page.locator('[data-tour="gene"]').click();page.wait_for_function('window.__explorer.state.gene !== null')
     assert 'Step 2' in page.locator('#story').inner_text()
     page.locator('[data-tour="process"]').click();page.wait_for_function('window.__explorer.state.term !== null')
     assert 'Step 3' in page.locator('#story').inner_text()
     page.locator('#reset').click();page.wait_for_function('window.__explorer.state.gene === null && window.__explorer.state.term === null')
     assert page.locator('#story').is_hidden()
+    # Instructor-feedback features: 3D brain locator, sideways volcano, linear zoomed profile, edge strength, takeaway.
+    assert page.locator('#brain3d').count()==1
+    page.locator('.brain-key[data-region="Hb"]').click();page.wait_for_function('window.__explorer.context.id === "Hb_zt16_resilient_vs_control"')
+    page.locator('.brain-key[data-region="SCN"]').click();page.wait_for_function('window.__explorer.context.id === "SCN_zt16_resilient_vs_control"')
+    assert 'UP-REGULATED' in page.locator('#volcano-axis').inner_html()
+    page.locator('#candidates button').first.click();page.wait_for_selector('.sample-point')
+    assert page.locator('.axis-break').count()==1, 'Kcnk2 profile should use a zoomed linear axis'
+    widths={page.evaluate('el=>el.getAttribute("stroke-width")',e) for e in page.locator('.edge').element_handles()}
+    assert len(widths)>=2, widths
+    assert page.locator('#fact-night').inner_text().endswith('%') and page.locator('#fact-ratio').inner_text().endswith('×')
+    page.locator('#reset').click();page.wait_for_function('window.__explorer.state.gene === null')
     page.locator('#candidates button').first.click()
     page.wait_for_function('window.__explorer.state.gene !== null')
     page.wait_for_selector('.sample-point')
@@ -93,6 +104,6 @@ with sync_playwright() as p:
     fixture.goto('http://127.0.0.1:8000');fixture.wait_for_function('window.__explorer?.rows > 0')
     assert 'No eligible GO' in fixture.locator('#network').inner_text()
     fixture.close()
-    result={'passed':True,'browser':'Chromium via Playwright','contexts_loaded':24,'linked_transitions':['context->volcano/network/profile','gene->profile/network','network gene->profile','process->volcano','clear process','contrast->views','reset'],'plain_language':['glossary hover','three-step guided story','example-gene shortcut'],'edge_states':['no selection','filtered all-zero gene','search miss','NA statistics','real zero-DEG context','annotation-only network','no-GO mocked response (test only)'],'responsive_widths':[1440,1366,390],'console_errors':errors,'http_errors':bad}
+    result={'passed':True,'browser':'Chromium via Playwright','contexts_loaded':24,'linked_transitions':['context->volcano/network/profile','gene->profile/network','network gene->profile','process->volcano','clear process','contrast->views','reset'],'plain_language':['glossary hover','three-step guided story','example-gene shortcut','3D brain locator click','sideways volcano','zoomed linear profile','edge evidence widths','takeaway facts'],'edge_states':['no selection','filtered all-zero gene','search miss','NA statistics','real zero-DEG context','annotation-only network','no-GO mocked response (test only)'],'responsive_widths':[1440,1366,390],'console_errors':errors,'http_errors':bad}
     (ROOT/'audit/browser_validation.json').write_text(json.dumps(result,indent=2))
     print(json.dumps(result,indent=2));browser.close()

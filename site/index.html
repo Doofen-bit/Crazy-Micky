@@ -10,10 +10,11 @@
 <script defer src="app.js"></script>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="mouse" viewBox="0 0 64 34"><path d="M14 23C6 28 1 22 5 17" fill="none" stroke="#c9a3a8" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="30" cy="21" rx="17" ry="10" fill="currentColor"/><ellipse cx="47" cy="18" rx="10" ry="7.5" fill="currentColor"/><path d="M54 14.5L62.5 19L54 22.5Z" fill="currentColor"/><circle cx="44" cy="10" r="5" fill="currentColor"/><circle cx="44" cy="10" r="2.6" fill="#f3b6c0" stroke="none"/><circle cx="52" cy="16" r="1.6" fill="#111" stroke="none"/><circle cx="62.5" cy="19" r="1.4" fill="#f08aa0" stroke="none"/><ellipse cx="22" cy="31" rx="3.2" ry="1.6" fill="currentColor"/><ellipse cx="40" cy="30" rx="3.2" ry="1.6" fill="currentColor"/></symbol></defs></svg>
 <a class="skip" href="#workspace">Skip to explorer</a>
 <header>
   <a class="brand" href="./"><span class="brandmark" aria-hidden="true">∿</span> STRESS ATLAS <small>an RNA-seq explorer for everyone</small></a>
-  <nav><a href="#experiment">The experiment</a><a href="#workspace">Explore</a><a href="#glossary">Glossary</a><a href="methods.html">Methods</a><a href="https://github.com/Doofen-bit/Crazy-Micky">Code</a></nav>
+  <nav><a href="#experiment">The experiment</a><a href="#workspace">Explore</a><a href="#glossary">Glossary</a><a href="#takeaway">Takeaway</a><a href="methods.html">Methods</a><a href="https://github.com/Doofen-bit/Crazy-Micky">Code</a></nav>
 </header>
 <main>
 
@@ -39,24 +40,91 @@
   </div>
   <ol class="exp-steps">
     <li>
-      <svg viewBox="0 0 80 56" aria-hidden="true"><ellipse cx="26" cy="36" rx="14" ry="9" fill="#9fb3c2"/><circle cx="14" cy="28" r="4" fill="#9fb3c2"/><ellipse cx="56" cy="32" rx="19" ry="12" fill="#c25532"/><circle cx="72" cy="22" r="5" fill="#c25532"/><path d="M38 14l4 6 4-6" stroke="#c25532" stroke-width="2.5" fill="none"/></svg>
+      <svg class="scene" viewBox="0 0 240 150" role="img" aria-label="Stress: a small test mouse is attacked briefly by a larger aggressive mouse, then lives next to it behind a see-through divider; repeated for 15 days with a new aggressor each day.">
+        <text x="60" y="13" text-anchor="middle" class="sc-h">① brief daily attack</text>
+        <rect x="4" y="20" width="112" height="78" rx="6" class="cage"/>
+        <use href="#mouse" x="12" y="62" width="38" height="20" style="color:#3a3f47"/>
+        <use href="#mouse" x="40" y="40" width="66" height="35" transform="translate(146,0) scale(-1,1) rotate(-12 73 58)" style="color:#fff" stroke="#7d8b97" stroke-width="1.2"/>
+        <path d="M30 50l3 7 4-6 2 8 5-5M24 58l-6-3M46 74l6 3" stroke="#d62f2f" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="80" y="34" text-anchor="middle" class="sc-s">larger aggressor</text><text x="30" y="92" text-anchor="middle" class="sc-s">test mouse</text>
+        <text x="180" y="13" text-anchor="middle" class="sc-h">② lives behind a wall</text>
+        <rect x="124" y="20" width="112" height="78" rx="6" class="cage"/>
+        <line x1="180" y1="22" x2="180" y2="96" stroke="#7fb3d5" stroke-width="3" stroke-dasharray="2 3"/>
+        <use href="#mouse" x="186" y="48" width="48" height="26" transform="translate(420,0) scale(-1,1)" style="color:#fff" stroke="#7d8b97" stroke-width="1.2"/>
+        <use href="#mouse" x="132" y="56" width="38" height="20" style="color:#3a3f47"/>
+        <text x="180" y="110" text-anchor="middle" class="sc-s">clear wall: can see, smell it</text>
+        <g transform="translate(6,118)"><rect width="22" height="22" rx="3" fill="#fff" stroke="#9fb3c2"/><rect width="22" height="6" rx="2" fill="#d62f2f"/><text x="11" y="18" text-anchor="middle" class="sc-s" style="font-weight:700">15</text></g>
+        <text x="34" y="128" class="sc-b">× 15 days</text><text x="34" y="141" class="sc-s">new aggressor each day</text>
+        <use href="#mouse" x="148" y="124" width="28" height="15" style="color:#596b85"/>
+        <text x="180" y="130" class="sc-s">control mice:</text><text x="180" y="141" class="sc-s">never attacked</text>
+      </svg>
       <h3><span>1</span> Stress</h3>
-      <p>For 15 days, each test mouse met a larger, aggressive mouse every day (<span class="gloss" tabindex="0" data-gloss="csds">chronic social defeat</span>). A <strong>control</strong> group was never stressed.</p>
+      <p>For 15 days, each test mouse was briefly attacked by a larger, aggressive mouse, then lived next to it behind a see-through divider (<span class="gloss" tabindex="0" data-gloss="csds">chronic social defeat</span>). <strong>Control</strong> mice were never attacked.</p>
     </li>
     <li>
-      <svg viewBox="0 0 80 56" aria-hidden="true"><rect x="4" y="8" width="72" height="40" rx="4" fill="none" stroke="#9fb3c2" stroke-width="2"/><ellipse cx="22" cy="28" rx="9" ry="6" fill="#007f79"/><path d="M33 28h12" stroke="#007f79" stroke-width="2.5" marker-end="url(#a)"/><ellipse cx="60" cy="28" rx="9" ry="6" fill="#596b85"/><defs><marker id="a" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#007f79"/></marker></defs></svg>
+      <svg class="scene" viewBox="0 0 240 150" role="img" aria-label="Sort: in a social test arena an unfamiliar mouse sits in a mesh box. Resilient mice spend time in the interaction zone next to it; susceptible mice stay in the far corners.">
+        <defs><pattern id="mesh" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h4v4" fill="none" stroke="#7d8b97" stroke-width=".6"/></pattern></defs>
+        <text x="60" y="13" text-anchor="middle" class="sc-h" style="fill:#007f79">Resilient</text>
+        <rect x="4" y="20" width="112" height="92" rx="4" class="cage"/>
+        <rect x="4" y="20" width="22" height="22" fill="#eef1f4"/><rect x="4" y="90" width="22" height="22" fill="#eef1f4"/>
+        <rect x="66" y="40" width="48" height="52" rx="8" fill="#e3f3f1" stroke="#007f79" stroke-dasharray="3 2"/>
+        <rect x="94" y="52" width="18" height="28" fill="url(#mesh)" stroke="#7d8b97"/>
+        <use href="#mouse" x="95" y="60" width="16" height="9" transform="rotate(90 103 64)" style="color:#fff" stroke="#7d8b97" stroke-width="1.5"/>
+        <path d="M20 96C30 80 50 86 60 70S80 50 86 60 78 84 88 82" fill="none" stroke="#007f79" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <use href="#mouse" x="64" y="62" width="28" height="15" style="color:#007f79"/>
+        <text x="60" y="126" text-anchor="middle" class="sc-s">stays near the stranger</text>
+        <text x="180" y="13" text-anchor="middle" class="sc-h" style="fill:#8e5bb0">Susceptible</text>
+        <rect x="124" y="20" width="112" height="92" rx="4" class="cage"/>
+        <rect x="124" y="20" width="22" height="22" fill="#eef1f4"/><rect x="124" y="90" width="22" height="22" fill="#eef1f4"/>
+        <rect x="186" y="40" width="48" height="52" rx="8" fill="#f2ecf6" stroke="#8e5bb0" stroke-dasharray="3 2"/>
+        <rect x="214" y="52" width="18" height="28" fill="url(#mesh)" stroke="#7d8b97"/>
+        <use href="#mouse" x="215" y="60" width="16" height="9" transform="rotate(90 223 64)" style="color:#fff" stroke="#7d8b97" stroke-width="1.5"/>
+        <path d="M136 100C150 96 142 84 134 80S150 60 140 46 132 36 138 34" fill="none" stroke="#8e5bb0" stroke-width="1.2" stroke-dasharray="2 2"/>
+        <use href="#mouse" x="126" y="24" width="26" height="14" transform="translate(278,0) scale(-1,1)" style="color:#8e5bb0"/>
+        <text x="180" y="126" text-anchor="middle" class="sc-s">hides in the far corners</text>
+        <text x="120" y="144" text-anchor="middle" class="sc-s">dashed = zone next to the stranger · grey = corners</text>
+      </svg>
       <h3><span>2</span> Sort</h3>
-      <p>A social test sorted the stressed mice. <strong>Resilient</strong> mice still approached a new mouse. <strong>Susceptible</strong> mice avoided it, a depression-like behaviour.</p>
+      <p>A social test placed each stressed mouse in an arena with an unfamiliar mouse behind mesh. <strong>Resilient</strong> mice still approached it. <strong>Susceptible</strong> mice avoided it and hid in the corners, a depression-like behaviour.</p>
     </li>
     <li>
-      <svg viewBox="0 0 80 56" aria-hidden="true"><circle cx="18" cy="20" r="9" fill="#e7b93f"/><path d="M50 12a10 10 0 1 0 10 14 8 8 0 1 1-10-14z" fill="#103f59"/><path d="M6 44h68" stroke="#9fb3c2" stroke-width="2"/><g fill="#007f79"><circle cx="12" cy="44" r="3"/><circle cx="30" cy="44" r="3"/><circle cx="50" cy="44" r="3"/><circle cx="68" cy="44" r="3"/></g></svg>
+      <svg class="scene" viewBox="0 0 240 150" role="img" aria-label="Sample: four sampling times, two with lights on and two with lights off; two brain regions, the SCN at the bottom of the brain and the habenula near the top middle.">
+        <rect x="10" y="6" width="110" height="16" fill="#f6df92"/><rect x="120" y="6" width="110" height="16" fill="#103f59"/>
+        <text x="65" y="18" text-anchor="middle" class="sc-s" style="font-weight:700;fill:#142c40">☀ lights on · rest</text><text x="175" y="18" text-anchor="middle" class="sc-s" style="font-weight:700;fill:#fff">☾ lights off · active</text>
+        <g text-anchor="middle"><circle cx="46.7" cy="30" r="4" fill="#007f79"/><text x="46.7" y="44" class="sc-b">ZT4</text><circle cx="101.7" cy="30" r="4" fill="#007f79"/><text x="101.7" y="44" class="sc-b">ZT10</text><circle cx="156.7" cy="30" r="4" fill="#007f79"/><text x="156.7" y="44" class="sc-b">ZT16</text><circle cx="211.7" cy="30" r="4" fill="#007f79"/><text x="211.7" y="44" class="sc-b">ZT22</text></g>
+        <path d="M214 112C216 100 208 92 196 94C186 72 150 58 118 60C90 62 74 72 68 84C58 80 46 86 46 100C46 114 54 122 66 122L72 128C92 134 122 134 150 130C170 128 186 124 198 120C206 118 212 116 214 112Z" fill="#e9eef4" stroke="#8aa0b2" stroke-width="1.5"/>
+        <path d="M196 94C190 100 190 110 198 120M68 84C72 96 70 112 66 122" fill="none" stroke="#b9c7d3"/>
+        <circle cx="150" cy="125" r="4.5" fill="#e69f00" stroke="#fff"/><circle cx="118" cy="80" r="4.5" fill="#2fa36b" stroke="#fff"/>
+        <line x1="150" y1="125" x2="172" y2="140" stroke="#e69f00"/><text x="174" y="146" class="sc-s" style="fill:#9a6a00;font-weight:700">SCN · clock</text>
+        <line x1="118" y1="80" x2="92" y2="58" stroke="#2fa36b"/><text x="22" y="58" class="sc-s" style="fill:#1f7a4d;font-weight:700">Hb · habenula</text>
+        <text x="214" y="88" text-anchor="end" class="sc-s">nose →</text>
+      </svg>
       <h3><span>3</span> Sample</h3>
-      <p>Brains were collected at <strong>four times of day</strong>, two in the lights-on rest phase and two in the lights-off active phase. Mice are night-active. Two regions were taken: the <span class="gloss" tabindex="0" data-gloss="scn">SCN</span>, the brain's master clock, and the <span class="gloss" tabindex="0" data-gloss="hb">habenula (Hb)</span>, which processes bad experiences.</p>
+      <p>Brains were collected at <strong>four times of day</strong>, two in the lights-on rest phase and two in the lights-off active phase (mice are night-active). Two regions were taken: the <span class="gloss" tabindex="0" data-gloss="scn">SCN</span>, the brain's master clock, and the <span class="gloss" tabindex="0" data-gloss="hb">habenula (Hb)</span>, which processes bad experiences.</p>
     </li>
     <li>
-      <svg viewBox="0 0 80 56" aria-hidden="true"><g fill="#356ab4"><rect x="8" y="30" width="9" height="18"/><rect x="21" y="16" width="9" height="32"/><rect x="34" y="38" width="9" height="10"/></g><g fill="#c25532"><rect x="50" y="22" width="9" height="26"/><rect x="63" y="10" width="9" height="38"/></g></svg>
+      <svg class="scene" viewBox="0 0 240 150" role="img" aria-label="Measure: RNA from each brain sample is sequenced into millions of short reads, which are counted per gene to compare groups.">
+        <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#007f79"/></marker></defs>
+        <text x="28" y="13" text-anchor="middle" class="sc-h">tissue</text>
+        <path d="M16 24h24v62a12 12 0 0 1-24 0z" fill="#fff" stroke="#8aa0b2" stroke-width="1.5"/>
+        <path d="M18 60q3-4 6 0t6 0 6 0M18 72q3-4 6 0t6 0 6 0M18 84q3-4 6 0t6 0 6 0" fill="none" stroke="#e69f00" stroke-width="1.6"/>
+        <text x="28" y="114" text-anchor="middle" class="sc-s">RNA</text>
+        <path d="M46 62h14" stroke="#007f79" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="91" y="13" text-anchor="middle" class="sc-h">read</text>
+        <g stroke-width="3" stroke-linecap="round"><path d="M70 30h18M92 30h22M72 40h14M90 40h24M68 50h22M94 50h16M74 60h20M98 60h14M70 70h12M86 70h26M72 80h22M98 80h12M68 90h16M88 90h22" stroke="#9fb3c2"/><path d="M70 30h18M90 40h24M74 60h20M72 80h22" stroke="#d62f2f"/><path d="M68 50h22M86 70h26" stroke="#2b6cb0"/></g>
+        <text x="91" y="114" text-anchor="middle" class="sc-s">millions of snippets</text>
+        <path d="M120 62h14" stroke="#007f79" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="188" y="13" text-anchor="middle" class="sc-h">count per gene</text>
+        <line x1="146" y1="96" x2="234" y2="96" stroke="#8aa0b2"/>
+        <rect x="152" y="56" width="14" height="40" fill="#596b85"/><rect x="168" y="30" width="14" height="66" fill="#007f79"/>
+        <rect x="196" y="50" width="14" height="46" fill="#596b85"/><rect x="212" y="74" width="14" height="22" fill="#007f79"/>
+        <text x="167" y="108" text-anchor="middle" class="sc-s">gene A</text><text x="211" y="108" text-anchor="middle" class="sc-s">gene B</text>
+        <text x="175" y="26" text-anchor="middle" class="sc-s" style="fill:#d62f2f;font-weight:700">▲ up</text><text x="200" y="45" class="sc-s" style="fill:#2b6cb0;font-weight:700">▼ down</text>
+        <rect x="146" y="120" width="8" height="8" fill="#596b85"/><text x="157" y="127" class="sc-s">control</text><rect x="192" y="120" width="8" height="8" fill="#007f79"/><text x="203" y="127" class="sc-s">resilient</text>
+        <text x="120" y="144" text-anchor="middle" class="sc-s">more reads from a gene = a more active gene (illustration)</text>
+      </svg>
       <h3><span>4</span> Measure</h3>
-      <p><span class="gloss" tabindex="0" data-gloss="rnaseq">RNA-seq</span> counted the messages (RNA) each gene was sending. That tells us how <span class="gloss" tabindex="0" data-gloss="expression">active</span> each of ~46,000 genes was. We then compared the groups one gene at a time.</p>
+      <p><span class="gloss" tabindex="0" data-gloss="rnaseq">RNA-seq</span> reads the RNA messages in each sample and counts how many came from each gene. That tells us how <span class="gloss" tabindex="0" data-gloss="expression">active</span> each of ~46,000 genes was. We then compared the groups one gene at a time.</p>
     </li>
   </ol>
   <div class="question">
@@ -99,6 +167,15 @@
     <section class="panel overview-panel">
       <div class="panelhead"><div><p class="eyebrow">VIEW 1 · COMPARE PLACES AND TIMES</p><h2>When and where do genes change?</h2></div><span class="step">Click a box</span></div>
       <p class="description">Each box is one comparison: one brain region at one time of day. The number counts the genes that clearly differ between the two groups. Darker means more genes changed. Click a box to look inside it.</p>
+      <div class="brain-wrap">
+        <canvas id="brain3d" role="img" aria-label="Rotating see-through 3D sketch of a mouse brain. The SCN sits at the bottom, just above where the optic nerves cross; the habenula sits deep in the top middle."></canvas>
+        <div class="brain-legend">
+          <p class="brain-title">Where are these two regions?</p>
+          <button class="brain-key" data-region="SCN"><i class="dot scn"></i><span><b>SCN</b> · master clock<br><small>bottom of the brain, just above where the optic nerves cross</small></span></button>
+          <button class="brain-key" data-region="Hb"><i class="dot hb"></i><span><b>Hb</b> · habenula<br><small>deep inside, near the top middle</small></span></button>
+          <p class="hint">Drag to turn the brain. Click a region to pick its row. Schematic: positions approximate, after the Allen Mouse Brain Atlas.</p>
+        </div>
+      </div>
       <div id="overview" aria-label="Brain region by time of day overview"></div>
       <div id="overview-legend"></div>
       <p class="note"><span class="gloss" tabindex="0" data-gloss="zt">ZT</span> = hours after the lights turn on (lights on ZT0–12, off ZT12–24). “4 vs 4” is the number of mice in each group.</p>
@@ -108,7 +185,7 @@
       <div class="panelhead"><div><p class="eyebrow">VIEW 2 · INSPECT ONE COMPARISON</p><h2>Which genes changed, and how much?</h2></div><button id="download" class="textbutton">Download this table (CSV)</button></div>
       <p id="volcano-sub" class="description"></p>
       <div class="volcano-wrap"><canvas id="volcano-canvas" aria-label="Volcano plot: each dot is one gene. Use the gene buttons or search to select a gene." role="img"></canvas><svg id="volcano-axis" aria-hidden="true"></svg></div>
-      <div class="legend" id="volcano-legend"><span><i class="swatch down"></i><b id="leg-down">Less active in first group</b></span><span><i class="swatch up"></i><b id="leg-up">More active in first group</b></span><span><i class="swatch muted"></i>Not clearly changed</span><span>◎ Selected gene</span></div>
+      <div class="legend" id="volcano-legend"><span><i class="swatch up"></i><b id="leg-up">Up-regulated (more active)</b></span><span><i class="swatch down"></i><b id="leg-down">Down-regulated (less active)</b></span><span><i class="swatch muted"></i>Not clearly changed</span><span>◎ Selected gene</span></div>
       <p id="volcano-note" class="note"></p>
       <p class="candidate-label">Most confident genes. Click one to follow it:</p>
       <div id="candidates" class="candidate-list" aria-label="Candidate genes"></div>
@@ -119,7 +196,7 @@
       <p id="expression-sub" class="description">Pick a gene in View 2, View 4 or the search box to see every individual mouse.</p>
       <div id="expression"></div>
       <div class="legend phenotype"><span>● Control (never stressed)</span><span>▲ Resilient</span><span>■ Susceptible</span></div>
-      <p class="note">Each mark is one mouse. Short bars and lines show group averages. Different mice were sampled at each time, so a line is <em>not</em> one mouse followed over time. The shaded columns are lights-off (night).</p>
+      <p class="note">Each mark is one mouse. Short bars and lines show group averages. Different mice were sampled at each time, so a line is <em>not</em> one mouse followed over time. The shaded columns are lights-off (night). The vertical axis shows plain counts and is <strong>zoomed to the range of the data</strong> (the ⫽ mark means it does not start at 0), so small differences look larger than they are.</p>
     </section>
 
     <section class="panel network-panel">
@@ -128,7 +205,9 @@
       <div id="network"></div>
       <div id="term-buttons" class="term-list"></div>
       <p id="network-note" class="note"></p>
-      <p class="note">● Gene (colour = more or less active) · ▭ <span class="gloss" tabindex="0" data-gloss="go">biological process (Gene Ontology)</span>. A line means “this gene is known to take part in this process”. It does <em>not</em> mean one gene controls another.</p>
+      <div class="legend net-legend"><span><i class="swatch up"></i>up-regulated gene</span><span><i class="swatch down"></i>down-regulated gene</span><span>▭ <span class="gloss" tabindex="0" data-gloss="go">biological process</span></span></div>
+      <div class="legend net-legend"><span><i class="ln w3"></i>shown directly in mouse experiments</span><span><i class="ln w2"></i>directly linked, inferred (e.g. from similar genes in other species)</span><span><i class="ln w1"></i>indirect (via a more specific sub-process)</span></div>
+      <p class="note">A line means “this gene is known to take part in this process”; thicker = more direct evidence. It does <em>not</em> mean one gene controls another.</p>
     </section>
   </div>
 
@@ -142,6 +221,18 @@
     <p><strong>Missing is not zero.</strong> Some genes have too few reads for a reliable test. They have no adjusted p-value, so they are left out of View 2's vertical axis, but you can still search for them and see their activity in View 3.</p>
     <p><strong>Limits.</strong> Only male mice were used, with 3–5 mice per group. Each sample is a piece of brain tissue containing many cell types, and everything comes from one experiment. A gene that is significant at one time but not another does not prove a formal time effect. The two regions come from the same mice, but we do not test differences between regions.</p>
   </div></details>
+</section>
+
+<section id="takeaway" class="takeaway" aria-labelledby="takeaway-title">
+  <p class="eyebrow">THE TAKEAWAY</p>
+  <h2 id="takeaway-title">Same stress. Different brains.<br>And the clock matters.</h2>
+  <div class="facts">
+    <div><strong id="fact-night">–</strong><p id="fact-night-text">of the gene changes in resilient mice appear at one moment: early night (ZT16), when mice are active.</p></div>
+    <div><strong id="fact-ratio">–</strong><p id="fact-ratio-text">more changed genes in resilient mice than in susceptible mice.</p></div>
+    <div><strong id="fact-go">–</strong><p id="fact-go-text">changed genes in the brain’s clock share one job: controlling how easily neurons fire.</p></div>
+  </div>
+  <p class="closing">Bouncing back from stress may not simply mean “nothing changed”. In these mice, resilience comes with its own brain activity, and <em>when</em> you look matters as much as <em>where</em>.</p>
+  <p class="note">One study, male mice only, 3–5 mice per group. These are patterns worth testing further, not a diagnosis. <button class="example" data-tour="context">Explore it again from step 1</button></p>
 </section>
 
 <footer>

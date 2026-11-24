@@ -1,5 +1,11 @@
 # AI assistance record
 
+## Instructor-feedback revision — 2026-11-24 (Anthropic Claude, Claude Code)
+
+User relayed six feedback items from the Nov 24 instructor meeting. Claude implemented them in `site/index.html`, `site/app.js` and `site/styles.css`. It also added `analysis/export_go_evidence.R` and `scripts/add_edge_strength.py` (edge-strength levels written into `site/data/networks/*.json`), extended `scripts/browser_qa.py`, and updated the proposal, report, slides, script and README.
+Checks: `validate_results.py` PASS; `browser_qa.py` PASS, including the brain-locator click, sideways volcano, zoomed linear axis, ≥2 edge widths, takeaway facts, 1440/1366/390 px, and no console/HTTP errors. Proposal 3 pages; report 5 pages.
+Limits: the 3D brain is a schematic point cloud with approximate positions, not an atlas mesh. Evidence codes describe annotation provenance, not biological effect size. Team review pending.
+
 ## Plain-language revision, slides and script — 2026-11-23 (Anthropic Claude, Claude Code)
 
 User (Yixuan Du) asked Claude to review the Codex-built project against the course guideline, make it understandable for a general audience, redo the final-presentation slides and three-person speaker script, prepare a one-page brief for the instructor meeting, test the program and push to GitHub.

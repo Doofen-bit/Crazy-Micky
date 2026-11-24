@@ -9,3 +9,4 @@ __pycache__/
 node_modules/
 *.zip
 results/analysis_run.log
+results/go_direct_evidence.csv

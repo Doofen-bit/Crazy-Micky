@@ -19,12 +19,12 @@
 
 | View | Chart | Linked behaviour |
 |---|---|---|
-| 1 · When and where do genes change? | Region × time grid; printed counts + sequential colour | Click a box → Views 2, 3, 4 update |
-| 2 · Which genes changed, and how much? | Volcano plot (Canvas, ~16k genes): change size × confidence | Click a gene → Views 3, 4 update |
-| 3 · One gene, through the day | Every mouse at 4 times; shape + colour per group; mean lines | Gene stays selected when the context changes |
-| 4 · What do the genes do? | **Node-link** bipartite diagram: genes ↔ Gene Ontology processes | Click a process → its genes are outlined in View 2 |
+| 1 · When and where do genes change? | Region × time grid (printed counts + sequential colour) with a see-through rotating 3D mouse-brain locator for SCN and Hb | Click a box or a brain region → Views 2, 3, 4 update |
+| 2 · Which genes changed, and how much? | Sideways volcano (Canvas, ~16k genes): up-regulated on top (red), down at the bottom (blue), more confident to the right | Click a gene → Views 3, 4 update |
+| 3 · One gene, through the day | Every mouse at 4 times; linear normalized counts on a zoomed axis with a break mark; shape + colour per group; mean lines | Gene stays selected when the context changes |
+| 4 · What do the genes do? | **Node-link** bipartite diagram: red/blue genes ↔ Gene Ontology processes; edge width = annotation evidence (experimental / inferred / indirect) | Click a process → its genes are outlined in View 2 |
 
-Plain-language layer: an illustrated experiment primer, a hover glossary for every technical term, worded axes and tooltips, day/night shading, and a three-step guided story ("Follow the story"). Colour is never the only cue: we use printed numbers, shapes (● ▲ ■), line styles and outlines.
+Plain-language layer: a detailed illustrated experiment primer (defeat and divider, social-interaction arena, sampling, sequencing), a hover glossary, worded axes and tooltips, day/night shading, a three-step guided story ("Follow the story") and a closing takeaway. The page runs from simple to detailed. Several of these changes came from the instructor discussion on 24 Nov 2026 (see `DECISIONS.md`). Colour is never the only cue: we use printed numbers, shapes (● ▲ ■), line styles and outlines.
 
 ## Run locally
 
@@ -66,6 +66,8 @@ python scripts/verify_label_provenance.py
 python scripts/prepare_inputs.py
 Rscript analysis/run_analysis.R
 python scripts/export_site.py
+Rscript analysis/export_go_evidence.R      # direct GO evidence codes for network genes
+python scripts/add_edge_strength.py         # edge width levels for View 4 (enrichment unchanged)
 python scripts/validate_results.py          # scientific invariants
 ```
 

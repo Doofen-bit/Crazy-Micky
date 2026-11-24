@@ -41,6 +41,7 @@ SCN16 = RC[0][2]
 # ---------- palette & helpers ----------
 INK, MUTED, PAPER, LINE = '142C40', '536B7C', 'F4F7FA', 'DCE4EB'
 TEAL, CORAL, BLUE, NAVY, CTRL, SUN = '007F79', 'C25532', '356AB4', '103F59', '596B85', 'E7B93F'
+UPC, DOWNC, SUS, SCNC, HBC = 'D62F2F', '2B6CB0', '8E5BB0', 'E69F00', '2FA36B'  # same encodings as the website
 TITLE_FONT, BODY_FONT = 'Georgia', 'Segoe UI'
 rgb = RGBColor.from_string
 prs = Presentation(); prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
@@ -126,21 +127,21 @@ SCRIPT = [
  ('Yixuan', '0:40', [('do', 'Press →.'),
    ('say', 'Here is the experiment, from a 2024 paper by Narain and colleagues, who shared all their data. Step one: for fifteen days, each test mouse met a bigger, aggressive mouse every day. Step two: a social test sorted them into resilient and susceptible. Step three: brain tissue was collected at four times of day. Step four: RNA-seq measured how active each of about forty-six thousand genes was. Jinyu will explain that.')]),
  ('Yixuan', '0:35', [('do', 'Press →.'),
-   ('say', 'They looked at two brain regions. The SCN is the brain’s master clock. It keeps our daily rhythm in step with light and dark. The habenula reacts to disappointment and bad experiences, and it is over-active in depression. Because one region is literally a clock, time of day matters. Mice are active at night, so samples were taken twice while the lights were on and the mice rested, and twice after lights off, when they are active. These times are called ZT4, 10, 16 and 22: hours after lights on.')]),
+   ('say', 'They looked at two brain regions. The SCN is the brain’s master clock. It keeps our daily rhythm in step with light and dark. The habenula reacts to disappointment and bad experiences, and it is over-active in depression. Mice are active at night, so samples were taken twice while the lights were on and the mice rested, and twice after lights off, when they are active. These times are called ZT4, 10, 16 and 22: hours after lights on.')]),
  ('Yixuan', '0:30', [('do', 'Press →.'),
    ('say', f'So our research question is: which genes differ between resilient, susceptible and never-stressed mice, and does that depend on the brain region and the time of day? We have 93 brain samples from 47 mice, about forty-six thousand genes each, and 24 comparisons: two regions, times four times of day, times three pairs of groups. That is far too much to read in a table, which is why we built a visualization. Jinyu?')]),
  ('Jinyu', '0:50', [('do', 'Press → when Jinyu starts.'),
    ('say', 'Thanks. How do you measure what a gene is doing? Think of DNA as a cookbook. Every cell in your body has the same cookbook. What makes a brain cell different is which recipes it is actually using right now. When a cell uses a recipe, it makes photocopies of it, and those copies are called RNA. RNA-seq takes the tissue, reads millions of short pieces of those copies, and counts how many came from each gene. More copies means a more active gene. The result is a big table: one row per gene and one column per mouse.')]),
  ('Jinyu', '0:50', [('do', 'Press →.'),
-   ('say', f'Then we compare the groups gene by gene, using a standard tool called DESeq2. We ask two questions. First, how big is the change? That is the fold change. For example, a gene called Kcnk2 is about {KFOLD:.1f} times as active in resilient mice as in control mice, in the clock region at ZT16. Second, how sure are we? With four mice per group and sixteen thousand genes tested at once, some differences are just luck, so we use an adjusted p-value: smaller means more confident. For Kcnk2 it is about {round(KP * 1e6)} in a million. We call a gene “changed” only if it passes both cutoffs. The volcano plot on the right shows every gene this way.')]),
+   ('say', f'Then we compare the groups gene by gene, using a standard tool called DESeq2. We ask two questions. First, how big is the change? That is the fold change. For example, a gene called Kcnk2 is about {KFOLD:.1f} times as active in resilient mice as in control mice, in the clock region at ZT16. Second, how sure are we? With four mice per group and sixteen thousand genes tested at once, some differences are just luck, so we use an adjusted p-value: smaller means more confident. For Kcnk2 it is about {round(KP * 1e6)} in a million. We call a gene “changed” only if it passes both cutoffs. On our volcano plot, up-regulated genes are at the top in red, down-regulated at the bottom in blue, and further right means more confident.')]),
  ('Jinyu', '0:45', [('do', 'Press →.'),
    ('say', f'{SCN16} changed genes are still hard to read, so we ask: what do they do? The Gene Ontology is a public database that tags genes with the jobs they do, a bit like hashtags. Then we check whether any tag appears more often than chance would predict. Take “regulation of membrane potential”, which is basically how neurons control their electrical charge, or how easily they fire. By chance we would expect about {EXPECTED:.0f} of our changed genes to carry this tag. We actually see {OBS}, almost {OBS / EXPECTED:.0f} times more. That is called enrichment. One caution: sharing a tag does not mean one gene controls another. Now Yi Yao will show how we turned all this into pictures.')]),
  ('Yi Yao', '0:30', [('do', 'Press → when Yi Yao starts.'),
    ('say', 'Thanks Jinyu. Our audience is people like you: classmates and curious readers with no biology background. We designed for three tasks. One, compare: where and when do genes change? Two, inspect: how does one gene behave in every individual mouse, not just on average? And three, explore: what do the changed genes do together?')]),
  ('Yi Yao', '0:40', [('do', 'Press →.'),
-   ('say', 'We answer these with four views that share one state. View 1, the overview grid, counts changed genes for each region and time. View 2 is the volcano plot for one comparison. View 3 follows one gene through the day, showing every mouse. View 4 is a node-link diagram linking genes to the processes they share: our required complex layout. Clicking a box updates the other three views, clicking a gene updates Views 3 and 4, and clicking a process highlights its genes in View 2. Everything is built with D3.')]),
+   ('say', 'We answer these with four views that share one state. View 1, the overview grid, counts changed genes for each region and time, with a see-through 3D brain that shows where the two regions are. View 2 is the volcano plot for one comparison, with up-regulated genes on top. View 3 follows one gene through the day, showing every mouse. View 4 is a node-link diagram linking genes to the processes they share: our required complex layout. Red genes go up, blue go down, and thicker lines mean stronger evidence. Clicking a box, a gene or a process updates the other views. Everything is built with D3.')]),
  ('Yi Yao', '0:45', [('do', 'Press →.'),
-   ('say', 'Some key design choices. Because our audience is not biologists, we added a plain-language layer: a thirty-second primer, a hover glossary for every technical word, axes written in words, and a three-step guided story. We never rely on colour alone: boxes print their numbers, and groups use shapes and line styles. We show every mouse, not just averages, so you can see how noisy four mice are. And we replaced a moving force-directed network with a fixed two-column layout that is much easier to read.')]),
+   ('say', 'Several of these choices came from our meeting with the professor. Because our audience is not biologists, we drew the experiment as detailed pictures, added a hover glossary and a three-step story, turned the volcano so that up means up, and used plain counts instead of a log scale, with a break mark where we zoom the axis. We never rely on colour alone: boxes print their numbers, and groups use shapes and line styles. And the page ends with a short takeaway to remember.')]),
  ('Yi Yao', '1:45', [('do', 'Press →, then Alt+Tab to the browser (website at the top of the page).'),
    ('say', 'Let’s see it live. This is the public site on GitHub Pages.'),
    ('do', 'Scroll slowly past “The experiment in 30 seconds” down to “Follow the story”.'),
@@ -153,10 +154,12 @@ SCRIPT = [
    ('say', 'If we switch to susceptible mice, the night-time peak almost disappears.'),
    ('do', 'Click the story button “2 Follow one gene through the day”.'),
    ('say', 'Step two picks the most confident gene, Kcnk2. View 3 shows every single mouse. At ZT16 the triangles, the resilient mice, sit above the circles, the control mice.'),
-   ('do', 'Scroll up a little and click the “Hb” box in the ZT16 column of View 1.'),
-   ('say', 'If I click a different box, the gene stays selected and every view updates. That is the linking.'),
-   ('do', 'Click the “SCN · ZT16” box again, scroll up to the story buttons, then click “3 What do the changed genes do?” (the page scrolls to View 4 by itself).'),
+   ('do', 'Scroll up to View 1 and click the green “Hb” dot on the 3D brain (or the “Hb” button beside it).'),
+   ('say', 'The brain shows where the habenula is. Clicking it switches every view to the habenula, and the gene stays selected. That is the linking.'),
+   ('do', 'Click the “SCN · ZT16” box, scroll up to the story buttons, then click “3 What do the changed genes do?” (the page scrolls to View 4 by itself).'),
    ('say', 'Step three. In View 4, “regulation of membrane potential” is selected, and its genes are now outlined in the volcano plot.'),
+   ('do', 'Scroll to the bottom of the page to show “The takeaway”.'),
+   ('say', 'And the page ends with three facts to remember.'),
    ('do', 'Click “Reset all”, then Alt+Tab back to the slides and press →.')]),
  ('Yi Yao', '0:35', [('say', 'Under the hood, the statistics run offline in R and Python, from the 96 raw count files. The website only loads small prepared files and draws them with D3, with no server, and GitHub Actions publishes it to GitHub Pages. Automatic tests cover all 24 comparisons, every linked click, empty states and phone screens. AI assistants, Codex and Claude, helped with code and drafts; we reviewed and tested everything and documented it. Yixuan will wrap up.')]),
  ('Yixuan', '0:40', [('do', 'Press →.'),
@@ -188,7 +191,7 @@ text(s, .6, 1.85, 5.1, 4.6, ['Many people go through serious stress. **Only some
      'To study it, researchers use a **mouse model** in which some mice cope and others do not.'], 20, INK, space=16)
 groups = [(MSO_SHAPE.OVAL, CTRL, 'Control', 'Never stressed. The baseline.'),
           (MSO_SHAPE.ISOSCELES_TRIANGLE, TEAL, 'Resilient', 'Stressed, but still approaches a new mouse.'),
-          (MSO_SHAPE.RECTANGLE, CORAL, 'Susceptible', 'Stressed and now avoids other mice: a depression-like behaviour.')]
+          (MSO_SHAPE.RECTANGLE, SUS, 'Susceptible', 'Stressed and now avoids other mice: a depression-like behaviour.')]
 for j, (shp, col, name, desc) in enumerate(groups):
     y = 1.85 + j * 1.6
     box(s, 6.3, y, 6.4, 1.38)
@@ -197,34 +200,25 @@ for j, (shp, col, name, desc) in enumerate(groups):
     text(s, 7.45, y + .68, 5.1, .6, desc, 15, MUTED)
 text(s, 6.3, 6.6, 6.4, .35, 'These shapes encode the three groups everywhere on our website.', 12, MUTED, italic=True)
 
-# 3 Experiment steps
+# 3 Experiment steps (same detailed scenes as the website primer)
 s = new_slide('The experiment', 'Four steps, from stress to data', 'Yixuan')
-steps = [('Stress', '**15 days.** Each test mouse meets a larger, aggressive mouse every day (“chronic social defeat”). Controls are never stressed.'),
-         ('Sort', 'A **social test** sorts stressed mice: resilient mice still approach a new mouse, susceptible mice avoid it.'),
-         ('Sample', 'Brains collected at **4 times of day**, from **2 regions**: the SCN and the habenula.'),
-         ('Measure', '**RNA-seq** measures how active each of **~46,000 genes** is in every sample.')]
+steps = [('Stress', '**15 days**: a brief daily attack by a larger mouse, then life behind a see-through wall. Controls: never attacked.'),
+         ('Sort', 'Social test: **resilient** mice approach an unfamiliar mouse; **susceptible** mice hide in the corners.'),
+         ('Sample', 'Brains at **4 times of day**; **2 regions**: SCN (clock) and habenula.'),
+         ('Measure', '**RNA-seq** counts reads per gene: activity of **~46,000 genes**.')]
 for j, (h, b) in enumerate(steps):
     x = .6 + j * 3.15
-    card(s, x, 1.95, 2.8, 3.55, h, b, j + 1, hsize=20, bsize=15)
-    if j < 3: arrow(s, x + 2.82, 3.55, .3, .3)
-# simple icons
-ic = 2.65
-box(s, .9, 4.55, .55, .38, '9FB3C2', None, MSO_SHAPE.OVAL); box(s, 1.5, 4.45, .8, .52, CORAL, None, MSO_SHAPE.OVAL)
-box(s, 4.0, 4.5, .45, .45, TEAL, None, MSO_SHAPE.ISOSCELES_TRIANGLE); box(s, 4.65, 4.5, .45, .45, CORAL, None, MSO_SHAPE.RECTANGLE)
-box(s, 7.1, 4.45, .55, .55, SUN, None, MSO_SHAPE.OVAL); box(s, 7.85, 4.45, .55, .55, NAVY, None, MSO_SHAPE.MOON)
-for j, hgt in enumerate([.35, .6, .25, .5, .7]):
-    box(s, 10.15 + j * .22, 5.0 - hgt, .16, hgt, BLUE if j < 3 else CORAL, None, MSO_SHAPE.RECTANGLE)
-text(s, .6, 5.85, 12.1, .9, 'Source: Narain, Petković, … Chaudhury (2024). “Nighttime-specific gene expression changes in suprachiasmatic nucleus and habenula are associated with resiliency to chronic social stress.” Translational Psychiatry. All raw data are public (GIN, CC BY 4.0).', 12, MUTED)
+    box(s, x, 1.7, 2.95, 4.15)
+    picture(s, SL / f'scene{j + 1}.png', x + .08, 1.78, w=2.79, border=False)
+    badge(s, x + .15, 3.65, j + 1, TEAL, .38, 13)
+    text(s, x + .62, 3.62, 2.2, .45, h, 19, INK, True)
+    text(s, x + .15, 4.12, 2.7, 1.7, b, 13.5, MUTED, space=2)
+text(s, .6, 6.05, 12.1, .9, 'Source: Narain, Petković, … Chaudhury (2024). “Nighttime-specific gene expression changes in suprachiasmatic nucleus and habenula are associated with resiliency to chronic social stress.” Translational Psychiatry. All raw data are public (GIN, CC BY 4.0).', 12, MUTED)
 
 # 4 Regions and time
 s = new_slide('The experiment', 'Where and when they looked', 'Yixuan')
-for j, (name, sub, desc, col) in enumerate([
-        ('SCN', 'the master clock', 'A tiny region that keeps the body’s daily rhythm in step with light and dark.', TEAL),
-        ('Hb', 'the habenula', 'Reacts to disappointment and bad experiences; over-active in depression.', CORAL)]):
-    y = 1.9 + j * 2.25
-    box(s, .6, y, 5.0, 2.0)
-    text(s, .85, y + .2, 4.6, .6, f'**{name}** · {sub}', 22, col)
-    text(s, .85, y + .85, 4.5, 1.1, desc, 16, MUTED)
+picture(s, SL / 'brain.png', .6, 1.85, w=5.4)
+text(s, .6, 5.0, 5.4, 1.6, ['**SCN** (amber): the master clock, keeping daily rhythm in step with light and dark.', '**Hb** (green): reacts to disappointment; over-active in depression.'], 14, INK, space=6)
 X0, X1, Y = 6.3, 12.7, 3.3
 text(s, X0, 1.95, 6.4, .5, 'One 24-hour day in the lab', 18, INK, True)
 wd = (X1 - X0) / 2
@@ -311,12 +305,12 @@ text(s, .6, 6.2, 12.1, .5, 'Success = a reader can say which groups, region and 
 # 10 Four linked views
 s = new_slide('Visualization · four linked views', 'Four views, one shared state', 'Yi Yao')
 pic, pw, ph = picture(s, SL / 'dashboard_linked.png', .6, 1.6, h=5.3)
-for j, (fx, fy) in enumerate([(.02, .015), (.455, .015), (.02, .435), (.455, .435)]):
-    badge(s, .6 + pw * fx, 1.6 + ph * fy, j + 1, CORAL, .36, 13)
-views = [('Overview grid', 'Region × time. Each box counts changed genes (heatmap + printed numbers).'),
-         ('Volcano plot', 'Every gene in one comparison: change size vs confidence.'),
-         ('Gene through the day', 'Every mouse at 4 times, plus group averages.'),
-         ('Gene–process network', 'Node-link diagram: our required complex layout.')]
+for j, (fx, fy) in enumerate(json.loads((SL / 'panel_boxes.json').read_text())):
+    badge(s, .6 + pw * fx + .05, 1.6 + ph * fy + .05, j + 1, CORAL, .36, 13)
+views = [('Overview grid + 3D brain', 'Region × time boxes count changed genes; a see-through brain shows where SCN and Hb are.'),
+         ('Volcano plot, turned sideways', 'Up-regulated genes on top (red), down at the bottom (blue); right = more confident.'),
+         ('Gene through the day', 'Every mouse at 4 times, plain counts on a zoomed axis.'),
+         ('Gene–process network', 'Node-link layout (required); line width = strength of evidence.')]
 for j, (h, b) in enumerate(views):
     y = 1.6 + j * .92
     badge(s, 6.1, y + .05, j + 1, CORAL, .4, 14)
@@ -327,10 +321,10 @@ text(s, 6.3, 5.48, 6.3, 1.3, ['**Linked interactions**', 'Click a box → Views 
 
 # 11 Design choices
 s = new_slide('Visualization · design choices', 'Designed for non-experts', 'Yi Yao')
-choices = [('Plain language first', '30-second experiment primer; hover glossary for every technical word; axes in words (“◀ less active | more active ▶”); a 3-step guided story.'),
-           ('Never colour alone', 'Boxes print their numbers; groups use shapes ● ▲ ■ and line styles; selections use outlines and labels.'),
-           ('Show every mouse', 'View 3 plots individual mice, not only averages, so the small sample size stays visible. Missing data is never drawn as zero.'),
-           ('Stable network layout', 'Alternative: a force-directed layout moved constantly and was hard to read. A fixed two-column layout is stable and readable.')]
+choices = [('Pictures before numbers', 'Detailed drawings of the stress and social tests; a 3D brain locator; a 3-step guided story; a closing takeaway.'),
+           ('Up means up', 'Volcano turned sideways: up-regulated on top. Red = up and blue = down in every view.'),
+           ('Plain counts, honest zoom', 'View 3 uses linear counts, not logs; a break mark and caption show when the axis does not start at 0.'),
+           ('Never colour alone', 'Printed numbers, shapes ● ▲ ■, line styles and labels. Network layout is fixed (a force layout kept moving).')]
 for j, (h, b) in enumerate(choices):
     x = .6 + (j % 2) * 6.15; y = 1.75 + (j // 2) * 2.15
     card(s, x, y, 5.95, 1.95, h, b, j + 1, CORAL, 19, 15)
@@ -340,7 +334,7 @@ picture(s, SL / 'story.png', .6, 6.15, w=12.1)
 s = new_slide('Visualization · live demo', 'Let’s try it', 'Yi Yao')
 demo = ['Experiment primer and hover glossary', 'Story step 1: the ZT16 night-time column stands out',
         'Switch to susceptible vs control: the peak almost vanishes', 'Story step 2: follow Kcnk2 and see every mouse',
-        'Click another box: the gene stays selected (linking)', 'Story step 3: a process lights up its genes in the volcano']
+        'Click Hb on the 3D brain: the gene stays selected (linking)', 'Story step 3, then the closing takeaway']
 for j, d in enumerate(demo):
     y = 1.8 + j * .72
     badge(s, .6, y, j + 1, CORAL, .42, 14)
